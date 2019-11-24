@@ -22,4 +22,5 @@ Conflicts: runc
 Replaces: runc
 Provides: runc
 Description: CLI tool for spawning and running containers according to the OCI specification
- runc is a CLI tool for spawning and running containers according to the OCI specification.
+ runc is a CLI tool for spawning and running containers according to the OCI
+ specification.
