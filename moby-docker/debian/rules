@@ -1,0 +1,109 @@
+#!/usr/bin/make -f
+
+# temporary build path (see http://golang.org/doc/code.html#GOPATH)
+OUR_GOPATH := $(CURDIR)/.gopath
+export GOPATH := $(OUR_GOPATH)
+# circumvent a few problematic (for Debian) Go features inspired by dh-golang
+export GOCACHE := $(OUR_GOPATH)/.cache
+export GOPROXY := off
+export GO111MODULE := off
+export GOFLAGS := -gcflags=all="-trimpath=$(OUR_GOPATH)/src" -asmflags=all="-trimpath=$(OUR_GOPATH)/src"
+
+include /usr/share/dpkg/pkg-info.mk
+
+export VERSION := $(DEB_VERSION_UPSTREAM)
+export DOCKER_GITCOMMIT := $(DEB_VERSION_UPSTREAM_REVISION)
+
+export DOCKER_BUILDTAGS := apparmor seccomp selinux
+
+ifneq (,$(filter parallel=%, $(DEB_BUILD_OPTIONS)))
+	NUMJOBS := $(patsubst parallel=%, %, $(filter parallel=%, $(DEB_BUILD_OPTIONS)))
+	MAKEFLAGS += -j '$(NUMJOBS)'
+endif
+
+override_dh_auto_configure:
+	# set up GOPATH symlink farm
+	# libnetwork
+	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
+	ln -sfT '$(CURDIR)/libnetwork' '$(OUR_GOPATH)/src/github.com/docker/libnetwork'
+	# cli
+	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
+	ln -sfT '$(CURDIR)/dockercli' '$(OUR_GOPATH)/src/github.com/docker/cli'
+	# engine
+	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
+	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/docker/docker'
+
+# using separate build targets to allow for parallelism during build
+override_dh_auto_build: _build-tini _build-proxy _build-cli _build-manpages _build-engine
+	@#
+
+_build-tini: # (docker-init)
+	mkdir -p tini/build
+	cd tini/build \
+		&& cmake .. \
+		&& make tini-static
+
+_build-proxy: # (from libnetwork)
+	go build \
+		-o libnetwork/docker-proxy \
+		github.com/docker/libnetwork/cmd/proxy
+
+_build-cli:
+	DISABLE_WARN_OUTSIDE_CONTAINER=1 \
+		make -C dockercli \
+			LDFLAGS='' \
+			VERSION='$(VERSION)' \
+			GITCOMMIT='$(DOCKER_GITCOMMIT)' \
+			dynbinary
+
+# https://github.com/docker/cli/blob/v19.03.5/scripts/docs/generate-man.sh
+# (replacing hard-coded "/tmp/gen-manpages" with "debian/tmp/gen-manpages")
+_build-manpages:
+	cd '$(OUR_GOPATH)/src/github.com/docker/cli' \
+		&& export PATH='$(OUR_GOPATH)/bin':"$$PATH" \
+		&& sed 's!/tmp/gen-manpages!$(CURDIR)/debian/tmp/gen-manpages!g' scripts/docs/generate-man.sh \
+			| bash
+
+_build-engine:
+	PRODUCT=docker ./hack/make.sh dynbinary
+
+# basic smoke test to ensure binaries built successfully
+# (especially since their tests are *really* involved)
+override_dh_auto_test:
+	# tini
+	./tini/build/tini-static --version
+	# cli
+	./dockercli/build/docker --version
+	# engine
+	./bundles/dynbinary-daemon/dockerd --version
+
+override_dh_installsystemd:
+	dh_installsystemd --name=docker
+
+override_dh_installudev:
+	dh_installudev --priority=z80
+
+override_dh_install:
+	dh_install
+	dh_apparmor --profile-name=moby-docker -pmoby-docker
+
+override_dh_shlibdeps:
+	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
+
+override_dh_strip:
+	@# stop debhelper from stripping binaries
+	@# (Go traditionally has problems with stripping)
+
+	# docker-init is C-based, so we'll still strip that
+	strip --remove-section=.comment --remove-section=.note debian/*/usr/bin/docker-init
+	# flags from https://salsa.debian.org/debian/debhelper/blob/8138740ad7344598ca4c71f95c9b755dd7bbdbae/dh_strip#L372
+
+override_dh_auto_install:
+	@# stop debhelper from doing "make install"
+	@# (we use dh_install / dh-exec for installing files where they need to be)
+
+override_dh_auto_clean:
+	@# stop debhelper from doing "make clean"
+
+%:
+	dh $@ --with=bash-completion

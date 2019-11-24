@@ -1,0 +1,49 @@
+#!/usr/bin/make -f
+
+# temporary build path (see http://golang.org/doc/code.html#GOPATH)
+OUR_GOPATH := $(CURDIR)/.gopath
+export GOPATH := $(OUR_GOPATH)
+# circumvent a few problematic (for Debian) Go features inspired by dh-golang
+export GOCACHE := $(OUR_GOPATH)/.cache
+export GOPROXY := off
+export GO111MODULE := off
+
+include /usr/share/dpkg/pkg-info.mk
+
+override_dh_auto_configure:
+	# set up GOPATH symlink farm
+	mkdir -p '$(OUR_GOPATH)/src/github.com/containerd'
+	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/containerd/containerd'
+
+override_dh_auto_build:
+	cd '$(OUR_GOPATH)/src/github.com/containerd/containerd' \
+		&& $(MAKE) binaries man \
+			VERSION='$(DEB_VERSION_UPSTREAM_REVISION)' \
+			REVISION='' \
+			GO_GCFLAGS=' \
+				-gcflags=all="-trimpath=$(OUR_GOPATH)/src" \
+				-asmflags=all="-trimpath=$(OUR_GOPATH)/src" \
+			'
+
+# basic smoke test to ensure binaries built successfully
+override_dh_auto_test:
+	./bin/containerd --version
+	@# "containerd-shim" has no version flag
+	./bin/ctr --version
+
+override_dh_installsystemd:
+	dh_installsystemd --name=containerd
+
+override_dh_strip:
+	@# stop debhelper from stripping binaries
+	@# (Go traditionally has problems with stripping)
+
+override_dh_auto_install:
+	@# stop debhelper from doing "make install"
+	@# (we use dh_install / dh-exec for installing files where they need to be)
+
+override_dh_auto_clean:
+	@# stop debhelper from doing "make clean"
+
+%:
+	dh $@ --with=bash-completion

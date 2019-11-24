@@ -1,0 +1,28 @@
+Source: moby-containerd
+Section: admin
+Priority: optional
+Maintainer: Tianon Gravi <tianon@debian.org>
+Build-Depends: bash-completion,
+               debhelper (>= 12~),
+               debhelper-compat (= 12),
+               go-md2man,
+               golang-any (>= 2:1.11~) | golang-go (>= 2:1.11~) | gccgo (>= 4:8~),
+               libbtrfs-dev | btrfs-progs (<< 4.16.1~),
+               libseccomp-dev,
+               pkg-config
+Rules-Requires-Root: no
+Homepage: https://github.com/containerd/containerd
+Vcs-Browser: https://github.com/tianon/debian-moby
+Vcs-Git: https://github.com/tianon/debian-moby.git
+
+Package: moby-containerd
+Architecture: linux-any
+Depends: moby-runc (>= 1.0.0~rc9~), ${misc:Depends}, ${shlibs:Depends}
+Recommends: ca-certificates
+Conflicts: containerd, containerd.io
+Replaces: containerd, containerd.io
+Provides: containerd, containerd.io
+Description: An open and reliable container runtime
+ containerd is an industry-standard container runtime with an emphasis on simplicity, robustness and portability. It is available as a daemon for Linux and Windows, which can manage the complete container lifecycle of its host system: image transfer and storage, container execution and supervision, low-level storage and network attachments, etc.
+ .
+ containerd is designed to be embedded into a larger system, rather than being used directly by developers or end-users.

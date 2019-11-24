@@ -1,0 +1,7 @@
+.gopath/
+bundles/
+dockercli/build/
+dockercli/man/man*/
+dockerversion/*_autogen*.go
+libnetwork/docker-proxy
+tini/build/

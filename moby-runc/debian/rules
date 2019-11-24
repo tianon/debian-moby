@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+
+# temporary build path (see http://golang.org/doc/code.html#GOPATH)
+OUR_GOPATH := $(CURDIR)/.gopath
+export GOPATH := $(OUR_GOPATH)
+# circumvent a few problematic (for Debian) Go features inspired by dh-golang
+export GOCACHE := $(OUR_GOPATH)/.cache
+export GOPROXY := off
+export GO111MODULE := off
+
+override_dh_auto_configure:
+	# set up GOPATH symlink farm
+	mkdir -p '$(OUR_GOPATH)/src/github.com/opencontainers'
+	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/opencontainers/runc'
+
+override_dh_auto_build:
+	cd '$(OUR_GOPATH)/src/github.com/opencontainers/runc' \
+		&& $(MAKE) runc man \
+			BUILDTAGS='seccomp apparmor selinux' \
+			COMMIT='' \
+			EXTRA_FLAGS=' \
+				-gcflags=all="-trimpath=$(OUR_GOPATH)/src" \
+				-asmflags=all="-trimpath=$(OUR_GOPATH)/src" \
+			'
+
+# basic smoke test to ensure binaries built successfully
+# (especially since the tests are a bit too involved to run here)
+override_dh_auto_test:
+	./runc --version
+
+override_dh_strip:
+	@# stop debhelper from stripping binaries
+	@# (Go traditionally has problems with stripping)
+
+override_dh_auto_install:
+	@# stop debhelper from doing "make install"
+	@# (we use dh_install / dh-exec for installing files where they need to be)
+
+override_dh_auto_clean:
+	@# stop debhelper from doing "make clean"
+
+%:
+	dh $@ --with=bash-completion

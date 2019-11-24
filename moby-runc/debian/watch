@@ -1,0 +1,9 @@
+version=4
+
+# github's ".../tags" paginates too soon, so we lose historical versions too early for tianon's tastes (hence uscan.tianon.xyz)
+
+opts=\
+uversionmangle=s/-ce//g;s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/,\
+filenamemangle=s/.+\/v(\d\S*)\.tar\.gz/moby-runc_$1.orig.tar.gz/ \
+  https://uscan.tianon.xyz/github.com/opencontainers/runc \
+  https://github.com/.*/v(\d\S*)\.tar\.gz

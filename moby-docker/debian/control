@@ -1,0 +1,47 @@
+Source: moby-docker
+Section: admin
+Priority: optional
+Maintainer: Tianon Gravi <tianon@debian.org>
+Build-Depends: bash-completion,
+               cmake,
+               debhelper (>= 12~),
+               debhelper-compat (= 12),
+               dh-apparmor,
+               dh-exec,
+               go-md2man,
+               golang-any (>= 2:1.12~) | golang-go (>= 2:1.12~) | gccgo (>= 4:8~),
+               libapparmor-dev,
+               libbtrfs-dev | btrfs-progs (<< 4.16.1~),
+               libdevmapper-dev,
+               libltdl-dev,
+               libseccomp-dev,
+               pkg-config
+Rules-Requires-Root: no
+Homepage: https://github.com/docker/engine
+Vcs-Browser: https://github.com/tianon/debian-moby
+Vcs-Git: https://github.com/tianon/debian-moby.git
+
+Package: moby-docker
+Architecture: linux-any
+Depends: moby-containerd (>= 1.2~), ${misc:Depends}, ${shlibs:Depends}
+Recommends: apparmor, ca-certificates, git, iptables, kmod, pigz, xz-utils
+Suggests: aufs-tools, cgroupfs-mount | cgroup-lite
+Conflicts: docker,
+           docker-ce,
+           docker-ee,
+           docker-engine,
+           docker-engine-cs,
+           docker.io,
+           lxc-docker,
+           lxc-docker-virtual-package
+Replaces: docker,
+          docker-ce,
+          docker-ee,
+          docker-engine,
+          docker-engine-cs,
+          docker.io,
+          lxc-docker,
+          lxc-docker-virtual-package
+Provides: docker, docker-ce, docker.io
+Description: containerization technology combined with a work flow for building and containerizing your applications
+ Docker is a platform for developers and sysadmins to develop, ship, and run applications. Docker lets you quickly assemble applications from components and eliminates the friction that can come when shipping code. Docker lets you get your code tested and deployed into production as fast as possible.
