@@ -26,15 +26,12 @@ override_dh_auto_configure:
 	# libnetwork
 	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
 	ln -sfT '$(CURDIR)/libnetwork' '$(OUR_GOPATH)/src/github.com/docker/libnetwork'
-	# cli
-	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
-	ln -sfT '$(CURDIR)/dockercli' '$(OUR_GOPATH)/src/github.com/docker/cli'
 	# engine
 	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
 	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/docker/docker'
 
 # using separate build targets to allow for parallelism during build
-override_dh_auto_build: _build-tini _build-proxy _build-cli _build-manpages _build-engine
+override_dh_auto_build: _build-tini _build-proxy _build-engine
 	@#
 
 _build-tini: # (docker-init)
@@ -48,22 +45,6 @@ _build-proxy: # (from libnetwork)
 		-o libnetwork/docker-proxy \
 		github.com/docker/libnetwork/cmd/proxy
 
-_build-cli:
-	DISABLE_WARN_OUTSIDE_CONTAINER=1 \
-		make -C dockercli \
-			LDFLAGS='' \
-			VERSION='$(VERSION)' \
-			GITCOMMIT='$(DOCKER_GITCOMMIT)' \
-			dynbinary
-
-# https://github.com/docker/cli/blob/v19.03.5/scripts/docs/generate-man.sh
-# (replacing hard-coded "/tmp/gen-manpages" with "debian/tmp/gen-manpages")
-_build-manpages:
-	cd '$(OUR_GOPATH)/src/github.com/docker/cli' \
-		&& export PATH='$(OUR_GOPATH)/bin':"$$PATH" \
-		&& sed 's!/tmp/gen-manpages!$(CURDIR)/debian/tmp/gen-manpages!g' scripts/docs/generate-man.sh \
-			| bash
-
 _build-engine:
 	PRODUCT=docker ./hack/make.sh dynbinary
 
@@ -72,8 +53,6 @@ _build-engine:
 override_dh_auto_test:
 	# tini
 	./tini/build/tini-static --version
-	# cli
-	./dockercli/build/docker --version
 	# engine
 	./bundles/dynbinary-daemon/dockerd --version
 
@@ -85,7 +64,7 @@ override_dh_installudev:
 
 override_dh_install:
 	dh_install
-	dh_apparmor --profile-name=moby-docker -pmoby-docker
+	dh_apparmor --profile-name=moby-engine -pmoby-engine
 
 override_dh_shlibdeps:
 	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
@@ -106,4 +85,4 @@ override_dh_auto_clean:
 	@# stop debhelper from doing "make clean"
 
 %:
-	dh $@ --with=bash-completion
+	dh $@

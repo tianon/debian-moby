@@ -1,0 +1,3 @@
+#!/usr/bin/dh-exec
+build/docker => /usr/bin/docker
+contrib/completion/zsh/_docker /usr/share/zsh/vendor-completions/

@@ -1,4 +1,4 @@
-moby-docker (19.03.5-0) UNRELEASED; urgency=medium
+moby-cli (19.03.5-0) UNRELEASED; urgency=medium
 
   * Initial packaging
 
