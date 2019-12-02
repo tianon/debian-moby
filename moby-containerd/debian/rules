@@ -7,6 +7,7 @@ export GOPATH := $(OUR_GOPATH)
 export GOCACHE := $(OUR_GOPATH)/.cache
 export GOPROXY := off
 export GO111MODULE := off
+export GOFLAGS := -trimpath
 
 include /usr/share/dpkg/pkg-info.mk
 
@@ -19,11 +20,7 @@ override_dh_auto_build:
 	cd '$(OUR_GOPATH)/src/github.com/containerd/containerd' \
 		&& $(MAKE) binaries man \
 			VERSION='$(DEB_VERSION_UPSTREAM_REVISION)' \
-			REVISION='' \
-			GO_GCFLAGS=' \
-				-gcflags=all="-trimpath=$(OUR_GOPATH)/src" \
-				-asmflags=all="-trimpath=$(OUR_GOPATH)/src" \
-			'
+			REVISION=''
 
 # basic smoke test to ensure binaries built successfully
 override_dh_auto_test:
