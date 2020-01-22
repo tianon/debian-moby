@@ -7,7 +7,7 @@ export GOPATH := $(OUR_GOPATH)
 export GOCACHE := $(OUR_GOPATH)/.cache
 export GOPROXY := off
 export GO111MODULE := off
-export GOFLAGS := -gcflags=all="-trimpath=$(OUR_GOPATH)/src" -asmflags=all="-trimpath=$(OUR_GOPATH)/src"
+export GOFLAGS := -trimpath -gcflags=all="-trimpath=$(OUR_GOPATH)/src" -asmflags=all="-trimpath=$(OUR_GOPATH)/src"
 
 override_dh_auto_configure:
 	# set up GOPATH symlink farm
