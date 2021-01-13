@@ -17,7 +17,7 @@ Vcs-Git: https://github.com/tianon/debian-moby.git
 
 Package: moby-containerd
 Architecture: linux-any
-Depends: moby-runc (>= 1.0.0~rc9~), ${misc:Depends}, ${shlibs:Depends}
+Depends: moby-runc (>= 1.0.0~rc10~), ${misc:Depends}, ${shlibs:Depends}
 Recommends: ca-certificates
 Conflicts: containerd, containerd.io
 Replaces: containerd, containerd.io

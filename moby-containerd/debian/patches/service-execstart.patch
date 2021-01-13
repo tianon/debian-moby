@@ -1,5 +1,5 @@
 diff --git a/containerd.service b/containerd.service
-index 5452ea1f..30b205ba 100644
+index 5f67110ab..0f45ad0cd 100644
 --- a/containerd.service
 +++ b/containerd.service
 @@ -5,7 +5,7 @@ After=network.target local-fs.target
@@ -9,5 +9,5 @@ index 5452ea1f..30b205ba 100644
 -ExecStart=/usr/local/bin/containerd
 +ExecStart=/usr/bin/containerd
  
+ Type=notify
  Delegate=yes
- KillMode=process

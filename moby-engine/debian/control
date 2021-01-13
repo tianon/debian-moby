@@ -16,7 +16,7 @@ Build-Depends: cmake,
                libseccomp-dev,
                pkg-config
 Rules-Requires-Root: no
-Homepage: https://github.com/docker/engine
+Homepage: https://github.com/moby/moby
 Vcs-Browser: https://github.com/tianon/debian-moby
 Vcs-Git: https://github.com/tianon/debian-moby.git
 
@@ -30,6 +30,7 @@ Recommends: apparmor,
             moby-cli,
             moby-containerd (>= 1.2~),
             pigz,
+            procps,
             xz-utils
 Suggests: aufs-tools, cgroupfs-mount | cgroup-lite, git
 Conflicts: docker,

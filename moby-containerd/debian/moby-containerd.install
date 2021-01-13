@@ -1,1 +1,3 @@
-bin/* /usr/bin
+bin/containerd /usr/bin
+bin/containerd-shim* /usr/bin
+bin/ctr /usr/bin
