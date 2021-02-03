@@ -17,7 +17,7 @@ Vcs-Git: https://github.com/tianon/debian-moby.git
 Package: moby-cli
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
-Recommends: ca-certificates, git, pigz, xz-utils
+Recommends: ca-certificates, git
 Suggests: moby-engine
 Conflicts: docker,
            docker-ce,
