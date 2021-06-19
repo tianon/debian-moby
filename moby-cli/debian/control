@@ -7,7 +7,7 @@ Build-Depends: bash-completion,
                debhelper-compat (= 12),
                dh-exec,
                go-md2man,
-               golang-any (>= 2:1.13~) | golang-go (>= 2:1.13~) | gccgo (>= 4:8~),
+               golang-any (>= 2:1.13~) | golang-go (>= 2:1.13~) | gccgo-go (>= 2:1.13~),
                libltdl-dev
 Rules-Requires-Root: no
 Homepage: https://github.com/docker/cli
