@@ -32,7 +32,7 @@ override_dh_auto_build:
 	cd '$(OUR_GOPATH)/src/github.com/docker/cli' \
 		&& export PATH='$(OUR_GOPATH)/bin':"$$PATH" \
 		&& sed 's!/tmp/gen-manpages!$(CURDIR)/debian/tmp/gen-manpages!g' scripts/docs/generate-man.sh \
-			| bash
+			| bash -x
 
 # basic smoke test to ensure binaries built successfully
 # (especially since their tests are *really* involved)
