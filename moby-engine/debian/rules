@@ -1,5 +1,8 @@
 #!/usr/bin/make -f
 
+# prefer Go 1.13
+export PATH := /usr/lib/go-1.13/bin:$(PATH)
+
 # temporary build path (see http://golang.org/doc/code.html#GOPATH)
 OUR_GOPATH := $(CURDIR)/.gopath
 export GOPATH := $(OUR_GOPATH)
@@ -76,6 +79,9 @@ override_dh_strip:
 	# docker-init is C-based, so we'll still strip that
 	strip --remove-section=.comment --remove-section=.note debian/*/usr/bin/docker-init
 	# flags from https://salsa.debian.org/debian/debhelper/blob/8138740ad7344598ca4c71f95c9b755dd7bbdbae/dh_strip#L372
+
+override_dh_dwz:
+	@# doesn't work in Buster
 
 override_dh_auto_install:
 	@# stop debhelper from doing "make install"

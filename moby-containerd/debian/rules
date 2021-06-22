@@ -1,5 +1,8 @@
 #!/usr/bin/make -f
 
+# prefer Go 1.13
+export PATH := /usr/lib/go-1.13/bin:$(PATH)
+
 # temporary build path (see http://golang.org/doc/code.html#GOPATH)
 OUR_GOPATH := $(CURDIR)/.gopath
 export GOPATH := $(OUR_GOPATH)
@@ -34,6 +37,9 @@ override_dh_installsystemd:
 override_dh_strip:
 	@# stop debhelper from stripping binaries
 	@# (Go traditionally has problems with stripping)
+
+override_dh_dwz:
+	@# doesn't work in Buster
 
 override_dh_auto_install:
 	@# stop debhelper from doing "make install"
