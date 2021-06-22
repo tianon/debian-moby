@@ -1,5 +1,5 @@
-moby-containerd (1.5.2-1) unstable; urgency=medium
+moby-containerd (1.5.2-0) UNRELEASED; urgency=medium
 
   * Initial packaging
 
- -- Tianon Gravi <tianon@debian.org>  Mon, 21 Jun 2021 17:20:53 -0700
+ -- Tianon Gravi <tianon@debian.org>  Sat, 23 Nov 2019 17:57:29 -0800
