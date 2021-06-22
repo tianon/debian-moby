@@ -1,5 +1,5 @@
-moby-runc (1.0.0~rc95-0) UNRELEASED; urgency=medium
+moby-runc (1.0.0~rc95-0) unstable; urgency=medium
 
   * Initial packaging
 
- -- Tianon Gravi <tianon@debian.org>  Tue, 08 Jun 2021 17:00:26 -0700
+ -- Tianon Gravi <tianon@debian.org>  Mon, 21 Jun 2021 21:11:43 -0700

@@ -1,5 +1,5 @@
-moby-engine (20.10.7-0) UNRELEASED; urgency=medium
+moby-engine (20.10.7-0) unstable; urgency=medium
 
   * Initial packaging
 
- -- Tianon Gravi <tianon@debian.org>  Tue, 12 Jan 2021 19:54:07 -0800
+ -- Tianon Gravi <tianon@debian.org>  Mon, 21 Jun 2021 21:11:42 -0700
