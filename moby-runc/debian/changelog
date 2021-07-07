@@ -1,6 +1,7 @@
 moby-runc (1.0.0-0) UNRELEASED; urgency=medium
 
   * Update to 1.0.0 upstream release
+  * Prefer "golang-1.16-go" on riscv64 (supports cgo and pie)
 
  -- Tianon Gravi <tianon@debian.org>  Tue, 06 Jul 2021 21:39:42 -0700
 
