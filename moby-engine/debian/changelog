@@ -1,8 +1,8 @@
-moby-engine (20.10.7-1) UNRELEASED; urgency=medium
+moby-engine (20.10.7-1) unstable; urgency=medium
 
   * Prefer "golang-1.16-go" on riscv64 (supports cgo and pie)
 
- -- Tianon Gravi <tianon@debian.org>  Tue, 06 Jul 2021 21:55:32 -0700
+ -- Tianon Gravi <tianon@debian.org>  Tue, 06 Jul 2021 22:05:08 -0700
 
 moby-engine (20.10.7-0) unstable; urgency=medium
 
