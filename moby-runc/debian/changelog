@@ -2,6 +2,7 @@ moby-runc (1.0.0-1) UNRELEASED; urgency=medium
 
   * Drop override_dh_strip
     http://dominik.honnef.co/posts/2016/10/go-and-strip/
+  * Update to debhelper 13 and drop override_dh_dwz
 
  -- Tianon Gravi <tianon@debian.org>  Thu, 08 Jul 2021 14:22:43 -0700
 

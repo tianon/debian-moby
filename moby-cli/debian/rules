@@ -42,9 +42,6 @@ override_dh_auto_build:
 override_dh_auto_test:
 	./build/docker --version
 
-override_dh_dwz:
-	@# doesn't work in Buster
-
 override_dh_auto_install:
 	@# stop debhelper from doing "make install"
 	@# (we use dh_install / dh-exec for installing files where they need to be)

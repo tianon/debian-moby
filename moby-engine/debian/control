@@ -3,8 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Tianon Gravi <tianon@debian.org>
 Build-Depends: cmake,
-               debhelper (>= 12~),
-               debhelper-compat (= 12),
+               debhelper-compat (= 13),
                dh-apparmor,
                dh-exec,
                go-md2man,
