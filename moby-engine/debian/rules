@@ -72,14 +72,6 @@ override_dh_install:
 override_dh_shlibdeps:
 	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
 
-override_dh_strip:
-	@# stop debhelper from stripping binaries
-	@# (Go traditionally has problems with stripping)
-
-	# docker-init is C-based, so we'll still strip that
-	strip --remove-section=.comment --remove-section=.note debian/*/usr/bin/docker-init
-	# flags from https://salsa.debian.org/debian/debhelper/blob/8138740ad7344598ca4c71f95c9b755dd7bbdbae/dh_strip#L372
-
 override_dh_dwz:
 	@# doesn't work in Buster
 

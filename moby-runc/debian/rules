@@ -28,10 +28,6 @@ override_dh_auto_build:
 override_dh_auto_test:
 	./runc --version
 
-override_dh_strip:
-	@# stop debhelper from stripping binaries
-	@# (Go traditionally has problems with stripping)
-
 override_dh_dwz:
 	@# doesn't work in Buster
 

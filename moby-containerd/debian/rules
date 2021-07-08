@@ -34,10 +34,6 @@ override_dh_auto_test:
 override_dh_installsystemd:
 	dh_installsystemd --name=containerd
 
-override_dh_strip:
-	@# stop debhelper from stripping binaries
-	@# (Go traditionally has problems with stripping)
-
 override_dh_dwz:
 	@# doesn't work in Buster
 

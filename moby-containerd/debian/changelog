@@ -1,3 +1,10 @@
+moby-containerd (1.5.2-1) UNRELEASED; urgency=medium
+
+  * Drop override_dh_strip
+    http://dominik.honnef.co/posts/2016/10/go-and-strip/
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 08 Jul 2021 14:22:09 -0700
+
 moby-containerd (1.5.2-0) unstable; urgency=medium
 
   * Initial packaging

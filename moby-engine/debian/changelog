@@ -1,3 +1,10 @@
+moby-engine (20.10.7-2) UNRELEASED; urgency=medium
+
+  * Drop override_dh_strip
+    http://dominik.honnef.co/posts/2016/10/go-and-strip/
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 08 Jul 2021 14:22:28 -0700
+
 moby-engine (20.10.7-1) unstable; urgency=medium
 
   * Prefer "golang-1.16-go" on riscv64 (supports cgo and pie)
