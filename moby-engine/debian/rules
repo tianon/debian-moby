@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
-# prefer Go 1.13 (fallback to 1.16 for riscv64)
-export PATH := /usr/lib/go-1.13/bin:/usr/lib/go-1.16/bin:$(PATH)
+# prefer Go 1.16
+export PATH := /usr/lib/go-1.16/bin:$(PATH)
 
 # temporary build path (see http://golang.org/doc/code.html#GOPATH)
 OUR_GOPATH := $(CURDIR)/.gopath

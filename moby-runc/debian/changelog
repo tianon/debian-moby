@@ -1,3 +1,10 @@
+moby-runc (1.0.2-1) UNRELEASED; urgency=medium
+
+  * Update to Go 1.16
+  * Update to 1.0.2 release
+
+ -- Tianon Gravi <tianon@debian.org>  Tue, 24 Aug 2021 17:21:21 -0700
+
 moby-runc (1.0.1-1) unstable; urgency=medium
 
   * Drop override_dh_strip
