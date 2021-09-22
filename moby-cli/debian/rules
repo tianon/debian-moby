@@ -15,7 +15,9 @@ export GOFLAGS := -trimpath
 include /usr/share/dpkg/pkg-info.mk
 
 export VERSION := $(DEB_VERSION_UPSTREAM)
-export DOCKER_GITCOMMIT := $(DEB_VERSION_UPSTREAM_REVISION)
+export GITCOMMIT := $(DEB_VERSION_UPSTREAM_REVISION)
+export GO_LINKMODE := dynamic
+export LDFLAGS :=
 
 override_dh_auto_configure:
 	# set up GOPATH symlink farm
@@ -23,12 +25,10 @@ override_dh_auto_configure:
 	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/docker/cli'
 
 override_dh_auto_build:
-	DISABLE_WARN_OUTSIDE_CONTAINER=1 \
-		make \
-			LDFLAGS='' \
-			VERSION='$(VERSION)' \
-			GITCOMMIT='$(DOCKER_GITCOMMIT)' \
-			dynbinary
+	mkdir -p build
+	sed -e '/GO111MODULE/d' scripts/build/binary > build/fixed-build-script.sh
+	chmod +x build/fixed-build-script.sh
+	build/fixed-build-script.sh
 
 # https://github.com/docker/cli/blob/v19.03.5/scripts/docs/generate-man.sh
 # (replacing hard-coded "/tmp/gen-manpages" with "debian/tmp/gen-manpages")
