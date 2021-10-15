@@ -31,7 +31,7 @@ Recommends: apparmor,
             pigz,
             procps,
             xz-utils
-Suggests: aufs-tools, cgroupfs-mount | cgroup-lite, git
+Suggests: cgroupfs-mount | cgroup-lite, git
 Conflicts: docker,
            docker-ce,
            docker-ee,
