@@ -1,8 +1,8 @@
-moby-engine (20.10.8-1) UNRELEASED; urgency=medium
+moby-engine (20.10.12-1) UNRELEASED; urgency=medium
 
   * Remove "aufs-tools" from "Suggests"
     (AUFS is not recommended)
-  * Update to 20.10.8 release
+  * Update to 20.10.12 release
   * Update to Go 1.16
 
  -- Tianon Gravi <tianon@debian.org>  Thu, 05 Aug 2021 11:30:22 -0700

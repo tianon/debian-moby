@@ -1,6 +1,6 @@
-moby-cli (20.10.8-1) UNRELEASED; urgency=medium
+moby-cli (20.10.12-1) UNRELEASED; urgency=medium
 
-  * Update to 20.10.8 release
+  * Update to 20.10.12 release
   * Update to Go 1.16
 
  -- Tianon Gravi <tianon@debian.org>  Thu, 05 Aug 2021 11:30:05 -0700

@@ -1,6 +1,6 @@
-moby-containerd (1.5.5-1) UNRELEASED; urgency=medium
+moby-containerd (1.5.9-1) UNRELEASED; urgency=medium
 
-  * Update to 1.5.5 release
+  * Update to 1.5.9 release
   * Update to Go 1.16
 
  -- Tianon Gravi <tianon@debian.org>  Thu, 05 Aug 2021 11:30:44 -0700
