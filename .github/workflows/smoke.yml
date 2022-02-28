@@ -14,7 +14,8 @@ jobs:
       matrix:
         dist:
           - unstable
-          - bullseye
+          - bullseye-backports
+      fail-fast: false
     name: ${{ matrix.dist }}
     env:
       dist: ${{ matrix.dist }}
