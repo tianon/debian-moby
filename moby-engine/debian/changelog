@@ -1,6 +1,7 @@
 moby-engine (20.10.17-1) UNRELEASED; urgency=medium
 
   * Update to 20.10.17 release
+  * Update to Go 1.17
 
  -- Tianon Gravi <tianon@debian.org>  Tue, 02 Aug 2022 11:06:05 -0700
 
