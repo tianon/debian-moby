@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
-# prefer Go 1.16
-export PATH := /usr/lib/go-1.16/bin:$(PATH)
+# prefer Go 1.17
+export PATH := /usr/lib/go-1.17/bin:$(PATH)
 
 # temporary build path (see http://golang.org/doc/code.html#GOPATH)
 OUR_GOPATH := $(CURDIR)/.gopath
@@ -9,8 +9,7 @@ export GOPATH := $(OUR_GOPATH)
 # circumvent a few problematic (for Debian) Go features inspired by dh-golang
 export GOCACHE := $(OUR_GOPATH)/.cache
 export GOPROXY := off
-export GO111MODULE := off
-export GOFLAGS := -trimpath
+export GOFLAGS := -trimpath -mod=vendor
 
 include /usr/share/dpkg/pkg-info.mk
 
@@ -18,6 +17,8 @@ override_dh_auto_configure:
 	# set up GOPATH symlink farm
 	mkdir -p '$(OUR_GOPATH)/src/github.com/containerd'
 	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/containerd/containerd'
+	# fix -mod=readonly to be -mod=vendor
+	sed -ri -e 's/mod=readonly/mod=vendor/g' Makefile
 
 override_dh_auto_build:
 	cd '$(OUR_GOPATH)/src/github.com/containerd/containerd' \
