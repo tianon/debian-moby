@@ -17,7 +17,7 @@ Package: moby-cli
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: ca-certificates, git
-Suggests: moby-engine
+Suggests: moby-cli-plugin-buildx, moby-engine
 Conflicts: docker,
            docker-ce,
            docker-ce-cli,
