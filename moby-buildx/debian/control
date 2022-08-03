@@ -1,0 +1,27 @@
+Source: moby-buildx
+Section: admin
+Priority: optional
+Maintainer: Tianon Gravi <tianon@debian.org>
+Build-Depends: debhelper-compat (= 13),
+               golang-1.17-go | golang-go (>= 2:1.17~) | golang-any (>= 2:1.17~)
+Rules-Requires-Root: no
+Homepage: https://github.com/docker/buildx
+Vcs-Browser: https://github.com/tianon/debian-moby
+Vcs-Git: https://github.com/tianon/debian-moby.git
+
+Package: moby-cli-plugin-buildx
+Architecture: linux-any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: ca-certificates, git
+Enhances: moby-cli
+Suggests: moby-engine
+Conflicts: docker-buildx-plugin
+Replaces: docker-buildx-plugin
+Description: Docker CLI plugin for extended build capabilities with BuildKit
+ Docker Buildx is a CLI plugin that extends the docker command with the full
+ support of the features provided by Moby BuildKit builder toolkit. It
+ provides the same user experience as docker build with many new features like
+ creating scoped builder instances and building against multiple nodes
+ concurrently.
+ .
+ This package provides the "docker-buildx" CLI plugin binary.

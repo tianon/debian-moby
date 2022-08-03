@@ -1,0 +1,40 @@
+#!/usr/bin/make -f
+
+# prefer Go 1.17
+export PATH := /usr/lib/go-1.17/bin:$(PATH)
+
+# circumvent a few problematic (for Debian) Go features inspired by dh-golang
+export GOCACHE := $(CURDIR)/.gocache
+export GOPROXY := off
+
+include /usr/share/dpkg/pkg-info.mk
+PKG := github.com/docker/buildx
+LDFLAGS := \
+	-X $(PKG)/version.Package=$(PKG) \
+	-X $(PKG)/version.Revision= \
+	-X $(PKG)/version.Version=$(DEB_VERSION_UPSTREAM)
+
+override_dh_auto_build:
+	go build \
+		-trimpath \
+		-mod=vendor \
+		-ldflags '$(LDFLAGS)' \
+		-o docker-buildx \
+		./cmd/buildx
+
+# basic smoke test to ensure binaries built successfully
+# (especially since their tests are *really* involved)
+override_dh_auto_test:
+	./docker-buildx version
+	! { ./docker-buildx version | grep -F '0.0.0'; }
+	./docker-buildx version | grep -F '$(DEB_VERSION_UPSTREAM)'
+
+override_dh_auto_install:
+	@# stop debhelper from doing "make install"
+	@# (we use dh_install for installing files where they need to be)
+
+override_dh_auto_clean:
+	@# stop debhelper from doing "make clean"
+
+%:
+	dh $@
