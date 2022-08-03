@@ -1,5 +1,5 @@
-moby-buildx (0.8.2-1) UNRELEASED; urgency=medium
+moby-buildx (0.8.2-1) unstable; urgency=medium
 
   * Initial packaging
 
- -- Tianon Gravi <tianon@debian.org>  Tue, 02 Aug 2022 11:05:55 -0700
+ -- Tianon Gravi <tianon@debian.org>  Wed, 03 Aug 2022 11:33:36 -0700
