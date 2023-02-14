@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v2 # https://github.com/tianon/debian-bin
         with:
           repository: tianon/debian-bin
-          ref: 0c3d9795af0dc60326139a51870ec5099ebbd963
+          ref: 5cbd9464fdc4a128856aacecb047516390edfff3
           path: .debian-bin
       - name: Prepare PATH
         run: |
