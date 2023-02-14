@@ -1,0 +1,32 @@
+Description: adjust "plain" progress output (during RUN) to have red highlight for stderr and no line prefix like the classic builder
+Author: Tianon Gravi <tianon@debian.org>
+Applied-Upstream: 👀 (no, but *might* be acceptable if it could be optional)
+
+diff --git a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
+index edbdaaa7..05aa13f0 100644
+--- a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
++++ b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
+@@ -542,9 +542,14 @@ func (t *trace) update(s *client.SolveStatus, termWidth int) {
+ 		}
+ 		i := 0
+ 		complete := split(l.Data, byte('\n'), func(dt []byte) {
++			if l.Stream == 2 {
++				// apply red highlight for stderr (needs to be done outside the logsPartial handling so we handle stdout+stderr on a single line)
++				dt = []byte(aec.Apply(string(dt), colorError))
++			}
+ 			if v.logsPartial && len(v.logs) != 0 && i == 0 {
+ 				v.logs[len(v.logs)-1] = append(v.logs[len(v.logs)-1], dt...)
+ 			} else {
++				/*
+ 				ts := time.Duration(0)
+ 				if ival := v.mostRecentInterval(); ival != nil {
+ 					ts = l.Timestamp.Sub(*ival.start)
+@@ -557,6 +562,8 @@ func (t *trace) update(s *client.SolveStatus, termWidth int) {
+ 					prec = 2
+ 				}
+ 				v.logs = append(v.logs, []byte(fmt.Sprintf("#%d %s %s", v.index, fmt.Sprintf("%.[2]*[1]f", sec, prec), dt)))
++				*/
++				v.logs = append(v.logs, dt)
+ 			}
+ 			i++
+ 		})

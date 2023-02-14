@@ -3,7 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Tianon Gravi <tianon@debian.org>
 Build-Depends: debhelper-compat (= 13),
-               golang-1.17-go | golang-go (>= 2:1.17~) | golang-any (>= 2:1.17~)
+               golang-1.19-go | golang-go (>= 2:1.19~) | golang-any (>= 2:1.19~)
 Rules-Requires-Root: no
 Homepage: https://github.com/docker/buildx
 Vcs-Browser: https://github.com/tianon/debian-moby

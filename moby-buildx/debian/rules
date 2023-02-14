@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
-# prefer Go 1.17
-export PATH := /usr/lib/go-1.17/bin:$(PATH)
+# prefer Go 1.19
+export PATH := /usr/lib/go-1.19/bin:$(PATH)
 
 # circumvent a few problematic (for Debian) Go features inspired by dh-golang
 export GOCACHE := $(CURDIR)/.gocache
@@ -11,8 +11,8 @@ include /usr/share/dpkg/pkg-info.mk
 PKG := github.com/docker/buildx
 LDFLAGS := \
 	-X $(PKG)/version.Package=$(PKG) \
-	-X $(PKG)/version.Revision= \
-	-X $(PKG)/version.Version=$(DEB_VERSION_UPSTREAM)
+	-X $(PKG)/version.Revision=tianon \
+	-X $(PKG)/version.Version=$(DEB_VERSION_UPSTREAM_REVISION)
 
 override_dh_auto_build:
 	go build \
@@ -35,6 +35,9 @@ override_dh_auto_install:
 
 override_dh_auto_clean:
 	@# stop debhelper from doing "make clean"
+
+override_dh_dwz:
+	@# https://salsa.debian.org/go-team/packages/dh-golang/-/commit/831f3a9dccc14f63f21d3dfac0c0d0e0c25b4084
 
 %:
 	dh $@

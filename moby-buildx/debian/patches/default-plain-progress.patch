@@ -1,0 +1,39 @@
+Description: require explicit opt-in for "tty" progress mode
+Author: Tianon Gravi <tianon@debian.org>
+Applied-Upstream: nack
+
+diff --git a/util/progress/printer.go b/util/progress/printer.go
+index 1247a7aa..40269e02 100644
+--- a/util/progress/printer.go
++++ b/util/progress/printer.go
+@@ -88,7 +88,7 @@ func NewPrinter(ctx context.Context, w io.Writer, out console.File, mode string)
+ 	switch mode {
+ 	case PrinterModeQuiet:
+ 		w = io.Discard
+-	case PrinterModeAuto, PrinterModeTty:
++	case PrinterModeTty:
+ 		if cons, err := console.ConsoleFromFile(out); err == nil {
+ 			c = cons
+ 		} else {
+diff --git a/vendor/github.com/moby/buildkit/util/progress/progresswriter/printer.go b/vendor/github.com/moby/buildkit/util/progress/progresswriter/printer.go
+index c96c4525..f7cc1f60 100644
+--- a/vendor/github.com/moby/buildkit/util/progress/progresswriter/printer.go
++++ b/vendor/github.com/moby/buildkit/util/progress/progresswriter/printer.go
+@@ -72,7 +72,7 @@ func NewPrinter(ctx context.Context, out console.File, mode string) (Writer, err
+ 
+ 	var c console.Console
+ 	switch mode {
+-	case "auto", "tty", "":
++	case "tty":
+ 		if cons, err := console.ConsoleFromFile(out); err == nil {
+ 			c = cons
+ 		} else {
+@@ -80,7 +80,7 @@ func NewPrinter(ctx context.Context, out console.File, mode string) (Writer, err
+ 				return nil, errors.Wrap(err, "failed to get console")
+ 			}
+ 		}
+-	case "plain":
++	case "plain", "auto", "":
+ 	default:
+ 		return nil, errors.Errorf("invalid progress mode %s", mode)
+ 	}

@@ -1,0 +1,17 @@
+Description: disable automatic "git info" metadata (BUILDX_GIT_INFO default of false instead of true)
+Author: Tianon Gravi <tianon@debian.org>
+Applied-Upstream: nack (this is enabled by default intentionally there)
+
+diff --git a/build/git.go b/build/git.go
+index 93325269..99c40b49 100644
+--- a/build/git.go
++++ b/build/git.go
+@@ -29,7 +29,7 @@ func getGitAttributes(ctx context.Context, contextPath string, dockerfilePath st
+ 			setGitLabels = v
+ 		}
+ 	}
+-	setGitInfo := true
++	setGitInfo := false
+ 	if v, ok := os.LookupEnv("BUILDX_GIT_INFO"); ok {
+ 		if v, err := strconv.ParseBool(v); err == nil {
+ 			setGitInfo = v
