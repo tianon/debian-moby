@@ -5,7 +5,7 @@ Maintainer: Tianon Gravi <tianon@debian.org>
 Build-Depends: bash-completion,
                debhelper-compat (= 13),
                go-md2man,
-               golang-1.17-go | golang-go (>= 2:1.17~) | golang-any (>= 2:1.17~),
+               golang-1.19-go | golang-go (>= 2:1.19~) | golang-any (>= 2:1.19~),
                libseccomp-dev,
                pkg-config
 Rules-Requires-Root: no
