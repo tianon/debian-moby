@@ -1,8 +1,8 @@
-moby-buildx (0.10.3-1) UNRELEASED; urgency=medium
+moby-buildx (0.10.3-1) unstable; urgency=medium
 
   * Update to 0.10.3
 
- -- Tianon Gravi <tianon@debian.org>  Thu, 16 Feb 2023 12:32:31 -0800
+ -- Tianon Gravi <tianon@debian.org>  Thu, 16 Feb 2023 13:04:56 -0800
 
 moby-buildx (0.10.2-1) unstable; urgency=medium
 
