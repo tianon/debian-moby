@@ -1,3 +1,9 @@
+moby-runc (1.1.7-1) UNRELEASED; urgency=medium
+
+  * Update to 1.1.7
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 04 May 2023 21:07:55 -0700
+
 moby-runc (1.1.4-1) unstable; urgency=medium
 
   * Skip "dh_dwz" again (matching "dh-golang")
