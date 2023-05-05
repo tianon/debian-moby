@@ -1,3 +1,9 @@
+moby-cli (20.10.24-1) UNRELEASED; urgency=medium
+
+  * Update to 20.10.24
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 04 May 2023 21:07:07 -0700
+
 moby-cli (20.10.23-1) unstable; urgency=medium
 
   * Skip "dh_dwz" again (matching "dh-golang")
