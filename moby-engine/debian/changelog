@@ -1,8 +1,8 @@
-moby-engine (20.10.24-1) UNRELEASED; urgency=medium
+moby-engine (20.10.24-1) unstable; urgency=medium
 
   * Update to 20.10.24
 
- -- Tianon Gravi <tianon@debian.org>  Thu, 04 May 2023 21:07:19 -0700
+ -- Tianon Gravi <tianon@debian.org>  Sat, 06 May 2023 20:36:38 -0700
 
 moby-engine (20.10.23-1) unstable; urgency=medium
 
