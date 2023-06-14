@@ -24,12 +24,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
       - name: Checkout debian-bin
         uses: actions/checkout@v2 # https://github.com/tianon/debian-bin
         with:
           repository: tianon/debian-bin
           ref: 5cbd9464fdc4a128856aacecb047516390edfff3
           path: .debian-bin
+
       - name: Prepare PATH
         run: |
           {
@@ -38,12 +40,15 @@ jobs:
           } >> "$GITHUB_PATH"
           sudo apt-get update -qq
           sudo apt-get install -yqq --no-install-recommends devscripts # uscan
+
       - name: Prepare schroot
         run: |
           docker-image-to-sbuild-schroot --pull "$dist.tar" "debian:$dist"
+
       - name: Prepare sbuild
         run: |
           docker-sbuild --pull .built "$dist.tar" --help > /dev/null
+
       - name: GitHub Actions + dpkg-buildpackage slowness workaround...
         run: |
           # dpkg-genbuildinfo is very slow on GitHub Actions (likely due to the large number of installed packages); it helps these tests a LOT to skip that for our dpkg-buildpackage invocations
@@ -51,9 +56,11 @@ jobs:
           sudo dpkg-divert --add --rename --divert "$gen.orig" "$gen"
           sudo ln -sfT /bin/true "$gen"
           # (maybe we should run "dsc-from-source" inside a tiny container instead??)
+
       - name: Prepare dscs
         run: |
           dsc-from-source .dscs */
+
       - name: sbuild
         run: |
           for dsc in .dscs/*.dsc; do
@@ -71,3 +78,7 @@ jobs:
               --verbose \
               "$dsc"
           done
+
+      - name: Test packages
+        run: |
+          ./test-debs.sh "$dist" .built
