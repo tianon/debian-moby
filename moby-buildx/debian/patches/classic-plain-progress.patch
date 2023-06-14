@@ -3,10 +3,10 @@ Author: Tianon Gravi <tianon@debian.org>
 Applied-Upstream: 👀 (no, but *might* be acceptable if it could be optional)
 
 diff --git a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
-index edbdaaa7..05aa13f0 100644
+index 4ceb4f52..7b1fde74 100644
 --- a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
 +++ b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
-@@ -542,9 +542,14 @@ func (t *trace) update(s *client.SolveStatus, termWidth int) {
+@@ -568,9 +568,14 @@ func (t *trace) update(s *client.SolveStatus, termWidth int) {
  		}
  		i := 0
  		complete := split(l.Data, byte('\n'), func(dt []byte) {
@@ -21,12 +21,25 @@ index edbdaaa7..05aa13f0 100644
  				ts := time.Duration(0)
  				if ival := v.mostRecentInterval(); ival != nil {
  					ts = l.Timestamp.Sub(*ival.start)
-@@ -557,6 +562,8 @@ func (t *trace) update(s *client.SolveStatus, termWidth int) {
+@@ -583,6 +588,8 @@ func (t *trace) update(s *client.SolveStatus, termWidth int) {
  					prec = 2
  				}
- 				v.logs = append(v.logs, []byte(fmt.Sprintf("#%d %s %s", v.index, fmt.Sprintf("%.[2]*[1]f", sec, prec), dt)))
+ 				v.logs = append(v.logs, []byte(fmt.Sprintf("%s %s", fmt.Sprintf("%.[2]*[1]f", sec, prec), dt)))
 +				*/
 +				v.logs = append(v.logs, dt)
  			}
  			i++
  		})
+diff --git a/vendor/github.com/moby/buildkit/util/progress/progressui/printer.go b/vendor/github.com/moby/buildkit/util/progress/progressui/printer.go
+index 338079d4..432cdbe3 100644
+--- a/vendor/github.com/moby/buildkit/util/progress/progressui/printer.go
++++ b/vendor/github.com/moby/buildkit/util/progress/progressui/printer.go
+@@ -147,7 +147,7 @@ func (p *textMux) printVtx(t *trace, dgst digest.Digest) {
+ 			l = l[v.logsOffset:]
+ 			fmt.Fprintf(p.w, "%s", l)
+ 		} else {
+-			fmt.Fprintf(p.w, "#%d %s", v.index, []byte(l))
++			fmt.Fprintf(p.w, "%s", []byte(l))
+ 		}
+ 
+ 		if i != len(v.logs)-1 || !v.logsPartial {
