@@ -1,15 +1,22 @@
+Origin: https://github.com/docker/buildx/pull/1886
+Applied-Upstream: 0.12+
+From: CrazyMax <crazy-max@users.noreply.github.com>
+Date: Wed, 21 Jun 2023 00:13:44 +0200
+Subject: build: prefer local image resolution for docker driver
+
 diff --git a/build/build.go b/build/build.go
-index b2663bcc..cb99b1a6 100644
+index 21b502a07f..b480187a33 100644
 --- a/build/build.go
 +++ b/build/build.go
-@@ -591,6 +591,10 @@ func toSolveOpt(ctx context.Context, node builder.Node, multiDriver bool, opt Op
+@@ -593,7 +593,10 @@ func toSolveOpt(ctx context.Context, node builder.Node, multiDriver bool, opt Op
+ 	}
  
  	if opt.Pull {
- 		so.FrontendAttrs["image-resolve-mode"] = "pull"
-+	} else {
-+		// work around a bug in https://github.com/moby/buildkit/blob/2ff0d2a2f53663aae917980fa27eada7950ff69c/util/resolver/pool.go#L198-L218 vs https://github.com/moby/moby/blob/d2e7a6e799c98815f0b163d16ee14f8359700c39/builder/builder-next/adapters/containerimage/pull.go#L143-L145 (default being the same as "local" / "prefer local" in one place, but not the other, which is used in the containerd integration)
-+		so.FrontendAttrs["image-resolve-mode"] = "local"
-+		// WARNING: this is *not* a general purpose solution and should be scoped to *only* the "docker" driver!  do not blindly copy Tianon's horrible patch!!
+-		so.FrontendAttrs["image-resolve-mode"] = "pull"
++		so.FrontendAttrs["image-resolve-mode"] = pb.AttrImageResolveModeForcePull
++	} else if nodeDriver.IsMobyDriver() {
++		// moby driver always resolves local images by default
++		so.FrontendAttrs["image-resolve-mode"] = pb.AttrImageResolveModePreferLocal
  	}
  	if opt.Target != "" {
  		so.FrontendAttrs["target"] = opt.Target
