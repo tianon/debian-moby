@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
-# prefer Go 1.19
-export PATH := /usr/lib/go-1.19/bin:$(PATH)
+# prefer Go 1.20
+export PATH := /usr/lib/go-1.20/bin:$(PATH)
 
 # circumvent a few problematic (for Debian) Go features inspired by dh-golang
 export GOCACHE := $(CURDIR)/.gocache

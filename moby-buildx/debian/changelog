@@ -1,10 +1,11 @@
-moby-buildx (0.10.5-1) UNRELEASED; urgency=medium
+moby-buildx (0.11.0-1) UNRELEASED; urgency=medium
 
-  * Update to 0.10.5
+  * Update to 0.11.0
+    - update to Go 1.20
   * Add patch to fix local image references on Docker's containerd integration
   * Update Vcs-* headers with proper subpath
 
- -- Tianon Gravi <tianon@debian.org>  Tue, 06 Jun 2023 16:26:36 -0700
+ -- Tianon Gravi <tianon@debian.org>  Tue, 13 Jun 2023 17:03:10 -0700
 
 moby-buildx (0.10.4-1) unstable; urgency=medium
 

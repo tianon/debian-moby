@@ -43,7 +43,20 @@ jobs:
 
       - name: Prepare schroot
         run: |
-          docker-image-to-sbuild-schroot --pull "$dist.tar" "debian:$dist"
+          img="debian:$dist"
+          docker pull "$img"
+          if [ "$dist" != 'unstable' ]; then
+            # add my personal backports (especially for newer Go versions)
+            wget -O tianon-backports.sources "https://apt.tianon.xyz/backports/dists/${dist%-backports}/tianon-backports.sources"
+            {
+              printf 'FROM %s\n' "$img"
+              printf 'RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*\n'
+              printf 'COPY tianon-backports.sources /etc/apt/sources.list.d/\n'
+            } > Dockerfile
+            img="tianon-backports:$dist"
+            docker build --tag "$img" .
+          fi
+          docker-image-to-sbuild-schroot "$dist.tar" "$img"
 
       - name: Prepare sbuild
         run: |
