@@ -16,7 +16,7 @@ Build-Depends: cmake,
                pkg-config
 Rules-Requires-Root: no
 Homepage: https://github.com/moby/moby
-Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-engine
+Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-engine/debian
 Vcs-Git: https://github.com/tianon/debian-moby.git [moby-engine]
 
 Package: moby-engine

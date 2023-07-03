@@ -10,7 +10,7 @@ Build-Depends: bash-completion,
                pkg-config
 Rules-Requires-Root: no
 Homepage: https://github.com/opencontainers/runc
-Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-runc
+Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-runc/debian
 Vcs-Git: https://github.com/tianon/debian-moby.git [moby-runc]
 
 Package: moby-runc

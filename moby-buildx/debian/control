@@ -6,7 +6,7 @@ Build-Depends: debhelper-compat (= 13),
                golang-1.20-go | golang-go (>= 2:1.20~) | golang-any (>= 2:1.20~)
 Rules-Requires-Root: no
 Homepage: https://github.com/docker/buildx
-Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-buildx
+Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-buildx/debian
 Vcs-Git: https://github.com/tianon/debian-moby.git [moby-buildx]
 
 Package: moby-cli-plugin-buildx

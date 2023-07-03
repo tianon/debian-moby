@@ -10,7 +10,7 @@ Build-Depends: bash-completion,
                libltdl-dev
 Rules-Requires-Root: no
 Homepage: https://github.com/docker/cli
-Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-cli
+Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-cli/debian
 Vcs-Git: https://github.com/tianon/debian-moby.git [moby-cli]
 
 Package: moby-cli
