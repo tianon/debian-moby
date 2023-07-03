@@ -2,6 +2,7 @@ moby-buildx (0.10.5-1) UNRELEASED; urgency=medium
 
   * Update to 0.10.5
   * Add patch to fix local image references on Docker's containerd integration
+  * Update Vcs-* headers with proper subpath
 
  -- Tianon Gravi <tianon@debian.org>  Tue, 06 Jun 2023 16:26:36 -0700
 

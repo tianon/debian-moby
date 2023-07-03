@@ -1,3 +1,9 @@
+moby-cli (20.10.24-2) UNRELEASED; urgency=medium
+
+  * Update Vcs-* headers with proper subpath
+
+ -- Tianon Gravi <tianon@debian.org>  Mon, 03 Jul 2023 15:16:04 -0700
+
 moby-cli (20.10.24-1) unstable; urgency=medium
 
   * Update to 20.10.24

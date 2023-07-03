@@ -11,8 +11,8 @@ Build-Depends: bash-completion,
                pkg-config
 Rules-Requires-Root: no
 Homepage: https://github.com/containerd/containerd
-Vcs-Browser: https://github.com/tianon/debian-moby
-Vcs-Git: https://github.com/tianon/debian-moby.git
+Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-containerd
+Vcs-Git: https://github.com/tianon/debian-moby.git [moby-containerd]
 
 Package: moby-containerd
 Architecture: linux-any
