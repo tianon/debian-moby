@@ -1,0 +1,16 @@
+Subject: disable "opt" plugin by default ("ctr install")
+Forwarded: no; this is very intentional upstream behavior (https://github.com/containerd/containerd/commit/1537f31381b946f395348d9891602a1e4a2c1070) that we just disagree with having enabled by default
+
+diff --git a/cmd/containerd/command/config.go b/cmd/containerd/command/config.go
+index b121df0c6..4bff33335 100644
+--- a/cmd/containerd/command/config.go
++++ b/cmd/containerd/command/config.go
+@@ -136,7 +136,7 @@ func platformAgnosticDefaultConfig() *srvconfig.Config {
+ 			MaxRecvMsgSize: defaults.DefaultMaxRecvMsgSize,
+ 			MaxSendMsgSize: defaults.DefaultMaxSendMsgSize,
+ 		},
+-		DisabledPlugins:  []string{},
++		DisabledPlugins:  []string{"opt"},
+ 		RequiredPlugins:  []string{},
+ 		StreamProcessors: streamProcessors(),
+ 	}
