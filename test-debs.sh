@@ -59,9 +59,9 @@ cat <<-'EOBASH'
 	docker run --rm hello-world
 	docker run --rm --init hello-world
 
-	printf 'FROM hello-world' | DOCKER_BUILDKIT=0 docker build --pull -
+	printf 'FROM hello-world\nRUN ["/hello"]' | DOCKER_BUILDKIT=0 docker build --pull -
 
-	printf 'FROM hello-world' | docker buildx build --pull -
+	printf 'FROM hello-world\nRUN ["/hello"]' | docker buildx build --pull -
 
 	docker images
 EOBASH
