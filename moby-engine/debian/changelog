@@ -2,6 +2,7 @@ moby-engine (20.10.25-1) UNRELEASED; urgency=medium
 
   * Update Vcs-* headers with proper subpath
   * Update to 20.10.25
+  * Add patch for Host header snafu with Go
 
  -- Tianon Gravi <tianon@debian.org>  Tue, 18 Jul 2023 10:49:18 -0700
 
