@@ -23,10 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Checkout debian-bin
-        uses: actions/checkout@v2 # https://github.com/tianon/debian-bin
+        uses: actions/checkout@v3 # https://github.com/tianon/debian-bin
         with:
           repository: tianon/debian-bin
           ref: 5cbd9464fdc4a128856aacecb047516390edfff3
