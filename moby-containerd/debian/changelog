@@ -1,6 +1,7 @@
 moby-containerd (1.6.21-2) UNRELEASED; urgency=medium
 
   * Update Vcs-* headers with proper subpath
+  * Patch arm64 normalization to add v8 explicitly
 
  -- Tianon Gravi <tianon@debian.org>  Mon, 03 Jul 2023 15:16:04 -0700
 

@@ -1,2 +1,3 @@
+arm64-v8.patch
 disable-opt-plugin.patch
 service-execstart.patch
