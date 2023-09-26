@@ -30,6 +30,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - uses: ./ # drinking our own champagne
+
       - name: Checkout debian-bin
         uses: actions/checkout@v3 # https://github.com/tianon/debian-bin
         with:
