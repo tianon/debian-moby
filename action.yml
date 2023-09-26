@@ -1,0 +1,21 @@
+name: "Install Tianon's Moby Builds"
+description: 'Install "docker" from builds by Tianon (https://apt.tianon.xyz/moby/)'
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        # this assmues Ubuntu, and maps that to a rough corresponding Debian release to install packages from
+        debian="$(< /etc/debian_version)"
+        [[ "$debian" == */sid ]]
+        debian="${debian%/sid}" # "bookworm", etc.
+        sudo wget -O /etc/apt/sources.list.d/tianon-moby.sources "https://apt.tianon.xyz/moby/dists/$debian/tianon-moby.sources" # https://apt.tianon.xyz/moby/
+        sudo tee /etc/apt/preferences.d/tianon.pref <<-'EOPIN'
+        Package: *
+        Pin: release o=Tianon
+        Pin-Priority: 999
+        EOPIN
+        sudo apt-get update
+        sudo apt-get install -y --purge --auto-remove moby-cli moby-cli-plugin-buildx moby-engine
+        sudo systemctl enable --now docker.service
+        docker version
+      shell: 'bash -Eeuo pipefail -x {0}'
