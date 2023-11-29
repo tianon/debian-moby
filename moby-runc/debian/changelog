@@ -1,8 +1,8 @@
-moby-runc (1.1.9-1) UNRELEASED; urgency=medium
+moby-runc (1.1.10-1) UNRELEASED; urgency=medium
 
-  * Update to 1.1.9
+  * Update to 1.1.10
 
- -- Tianon Gravi <tianon@debian.org>  Thu, 28 Sep 2023 11:51:14 -0700
+ -- Tianon Gravi <tianon@debian.org>  Wed, 29 Nov 2023 10:52:49 -0800
 
 moby-runc (1.1.8-1) unstable; urgency=medium
 
