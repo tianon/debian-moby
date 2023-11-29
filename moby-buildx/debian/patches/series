@@ -2,4 +2,3 @@ classic-plain-progress.patch
 containerd-arm64-v8.patch
 default-plain-progress.patch
 no-git-by-default.patch
-resolve-mode-local.patch
