@@ -1,8 +1,8 @@
-moby-containerd (1.6.26-1) UNRELEASED; urgency=medium
+moby-containerd (1.6.27-1) UNRELEASED; urgency=medium
 
-  * Update to 1.6.26
+  * Update to 1.6.27
 
- -- Tianon Gravi <tianon@debian.org>  Wed, 03 Jan 2024 14:48:32 -0800
+ -- Tianon Gravi <tianon@debian.org>  Fri, 12 Jan 2024 14:22:09 -0800
 
 moby-containerd (1.6.25-1) unstable; urgency=medium
 
