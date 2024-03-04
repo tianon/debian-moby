@@ -1,0 +1,28 @@
+Description: fix buildkit clipping configuration
+Applied-Upstream: https://github.com/moby/buildkit/commit/18821ec794e870693763a6fb314064e70efe7969, 21+ (buildkit 0.9+)
+
+diff --git a/vendor/github.com/moby/buildkit/util/progress/logs/logs.go b/vendor/github.com/moby/buildkit/util/progress/logs/logs.go
+index da82c6923eba..73c1a26b50ac 100644
+--- a/vendor/github.com/moby/buildkit/util/progress/logs/logs.go
++++ b/vendor/github.com/moby/buildkit/util/progress/logs/logs.go
+@@ -71,15 +71,16 @@ func (sw *streamWriter) checkLimit(n int) int {
+ 		maxSize = int(math.Ceil(time.Since(sw.created).Seconds())) * defaultMaxLogSpeed
+ 		sw.clipReasonSpeed = true
+ 	}
+-	if maxSize > defaultMaxLogSize {
++	if maxSize == -1 || maxSize > defaultMaxLogSize {
+ 		maxSize = defaultMaxLogSize
+ 		sw.clipReasonSpeed = false
+ 	}
+-	if maxSize < oldSize {
+-		return 0
+-	}
+ 
+ 	if maxSize != -1 {
++		if maxSize < oldSize {
++			return 0
++		}
++
+ 		if sw.size > maxSize {
+ 			return maxSize - oldSize
+ 		}

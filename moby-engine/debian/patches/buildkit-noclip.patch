@@ -1,0 +1,19 @@
+Description: disable buildkit's default log clipping
+Author: Tianon Gravi <tianon@debian.org>
+Forwarded: no (upstream's defaults are intentional, Tianon just disagrees with them)
+
+diff --git a/vendor/github.com/moby/buildkit/util/progress/logs/logs.go b/vendor/github.com/moby/buildkit/util/progress/logs/logs.go
+index bfecdda6b3..079d7e561a 100644
+--- a/vendor/github.com/moby/buildkit/util/progress/logs/logs.go
++++ b/vendor/github.com/moby/buildkit/util/progress/logs/logs.go
+@@ -18,8 +18,8 @@ import (
+ 	"github.com/tonistiigi/units"
+ )
+ 
+-var defaultMaxLogSize = 2 * 1024 * 1024
+-var defaultMaxLogSpeed = 200 * 1024 // per second
++var defaultMaxLogSize = -1
++var defaultMaxLogSpeed = -1
+ 
+ const (
+ 	stdout = 1
