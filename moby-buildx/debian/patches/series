@@ -1,4 +1,5 @@
 classic-plain-progress.patch
 containerd-arm64-v8.patch
+default-load.patch
 default-plain-progress.patch
 no-git-by-default.patch

@@ -59,9 +59,14 @@ cat <<-'EOBASH'
 	docker run --rm hello-world
 	docker run --rm --init hello-world
 
-	printf 'FROM hello-world\nRUN ["/hello"]' | DOCKER_BUILDKIT=0 docker build --pull -
+	printf 'FROM hello-world\nRUN ["/hello"]' | DOCKER_BUILDKIT=0 docker build --tag hello-build:classic -
 
-	printf 'FROM hello-world\nRUN ["/hello"]' | docker buildx build --pull -
+	printf 'FROM hello-world\nRUN ["/hello"]' | docker buildx build --tag hello-build:buildkit -
+
+	docker buildx create --name tianon --node tianon --driver docker-container --driver-opt image=tianon/buildkit --bootstrap
+	printf 'FROM hello-world\nRUN ["/hello"]' | docker buildx build --builder tianon --tag hello-build:buildx -
+
+	docker image inspect --format '.' hello-build:classic hello-build:buildkit hello-build:buildx > /dev/null
 
 	docker images
 EOBASH
