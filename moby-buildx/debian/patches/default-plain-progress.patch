@@ -3,7 +3,7 @@ Author: Tianon Gravi <tianon@debian.org>
 Applied-Upstream: nack
 
 diff --git a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
-index 01548229..04d41f84 100644
+index fcc4b835..87560022 100644
 --- a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
 +++ b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
 @@ -145,14 +145,14 @@ const (
@@ -22,4 +22,4 @@ index 01548229..04d41f84 100644
 +	case PlainMode, AutoMode, DefaultMode:
  		return newPlainDisplay(out, opts...), nil
  	case RawJSONMode:
- 		return newRawJSONDisplay(out, opts...), nil
+ 		return newRawJSONDisplay(out), nil

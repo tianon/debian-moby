@@ -1,0 +1,32 @@
+Description: set "default-load=true" by default for several drivers
+Author: Tianon Gravi <tianon@debian.org>
+Applied-Upstream: nack (this is disabled by default intentionally there)
+
+diff --git a/driver/docker-container/factory.go b/driver/docker-container/factory.go
+index 18bb2a4a..a0ceb2f9 100644
+--- a/driver/docker-container/factory.go
++++ b/driver/docker-container/factory.go
+@@ -50,6 +50,9 @@ func (f *factory) New(ctx context.Context, cfg driver.InitConfig) (driver.Driver
+ 		factory:       f,
+ 		InitConfig:    cfg,
+ 		restartPolicy: rp,
++
++		// Tianon prefers --load by default (matching long-time "docker build" behavior)
++		defaultLoad: true,
+ 	}
+ 	for k, v := range cfg.DriverOpts {
+ 		switch {
+diff --git a/driver/remote/factory.go b/driver/remote/factory.go
+index 1c30baad..5412fa3f 100644
+--- a/driver/remote/factory.go
++++ b/driver/remote/factory.go
+@@ -54,6 +54,9 @@ func (f *factory) New(ctx context.Context, cfg driver.InitConfig) (driver.Driver
+ 	d := &Driver{
+ 		factory:    f,
+ 		InitConfig: cfg,
++
++		// Tianon prefers --load by default (matching long-time "docker build" behavior)
++		defaultLoad: true,
+ 	}
+ 
+ 	tls := &tlsOpts{}
