@@ -1,8 +1,8 @@
-moby-buildx (0.14.1-1) UNRELEASED; urgency=medium
+moby-buildx (0.14.1-1) unstable; urgency=medium
 
   * Update to 0.14.1
 
- -- Tianon Gravi <tianon@debian.org>  Wed, 22 May 2024 10:43:45 -0700
+ -- Tianon Gravi <tianon@debian.org>  Thu, 23 May 2024 15:56:10 -0700
 
 moby-buildx (0.12.1-1) unstable; urgency=medium
 
