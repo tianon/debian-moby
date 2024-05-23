@@ -27,12 +27,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: tianon/debian-moby-action@HEAD # drinking our own champagne
 
       - name: Checkout debian-bin
-        uses: actions/checkout@v3 # https://github.com/tianon/debian-bin
+        uses: actions/checkout@v4 # https://github.com/tianon/debian-bin
         with:
           repository: tianon/debian-bin
           ref: 5cbd9464fdc4a128856aacecb047516390edfff3
