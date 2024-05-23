@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4 # https://github.com/tianon/debian-bin
         with:
           repository: tianon/debian-bin
-          ref: 5cbd9464fdc4a128856aacecb047516390edfff3
+          ref: de5b30401e07a6bfd537ae64b2a2007b7af70d00
           path: .debian-bin
 
       - name: Prepare PATH
@@ -91,6 +91,7 @@ jobs:
               --workdir /dsc \
               .built \
               "$dist.tar" \
+              --arch-all --arch-any --source \
               --bd-uninstallable-explainer apt \
               --build-dep-resolver aptitude \
               --resolve-alternatives \
