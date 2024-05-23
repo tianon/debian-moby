@@ -1,5 +1,4 @@
 .gopath/
 bundles/
 dockerversion/*_autogen*.go
-libnetwork/docker-proxy
 tini/build/
