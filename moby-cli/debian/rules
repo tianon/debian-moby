@@ -30,12 +30,20 @@ override_dh_auto_build:
 	chmod +x build/fixed-build-script.sh
 	build/fixed-build-script.sh
 
-# https://github.com/docker/cli/blob/v19.03.5/scripts/docs/generate-man.sh
-# (replacing hard-coded "/tmp/gen-manpages" with "debian/tmp/gen-manpages")
-	cd '$(OUR_GOPATH)/src/github.com/docker/cli' \
-		&& export PATH='$(OUR_GOPATH)/bin':"$$PATH" \
-		&& sed 's!/tmp/gen-manpages!$(CURDIR)/debian/tmp/gen-manpages!g' scripts/docs/generate-man.sh \
-			| bash -x
+# TODO https://github.com/docker/cli/issues/4212 / https://github.com/docker/cli/pull/4228 😭
+# https://github.com/docker/cli/blob/v23.0.10/scripts/docs/generate-man.sh
+#	mkdir -p man/man1; go run -tags manpages ./man/generate.go --root '.' --target "$$PWD/man/man1"
+# for now, we'll generate what we can and leave the rest for future work (😭)
+	set -eux; \
+	cd '$(OUR_GOPATH)/src/github.com/docker/cli'; \
+	cd man; \
+	for FILE in *.[0-9].md; do \
+		base="$$(basename "$$FILE")"; \
+		name="$${base%.md}"; \
+		num="$${name##*.}"; \
+		mkdir -p "man$${num}"; \
+		go-md2man -in "$$FILE" -out "man$$num/$$name"; \
+	done
 
 # basic smoke test to ensure binaries built successfully
 # (especially since their tests are *really* involved)

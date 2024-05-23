@@ -1,3 +1,9 @@
+moby-engine (23.0.11-1) UNRELEASED; urgency=medium
+
+  * Update to 23.0.11
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 23 May 2024 11:53:55 -0700
+
 moby-engine (20.10.27-2) unstable; urgency=medium
 
   * Backport https://github.com/moby/buildkit/commit/18821ec794e870693763a6fb314064e70efe7969

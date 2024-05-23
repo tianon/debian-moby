@@ -26,15 +26,12 @@ endif
 
 override_dh_auto_configure:
 	# set up GOPATH symlink farm
-	# libnetwork
-	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
-	ln -sfT '$(CURDIR)/libnetwork' '$(OUR_GOPATH)/src/github.com/docker/libnetwork'
 	# engine
 	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'
 	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/docker/docker'
 
 # using separate build targets to allow for parallelism during build
-override_dh_auto_build: _build-tini _build-proxy _build-engine
+override_dh_auto_build: _build-tini _build-engine
 	@#
 
 _build-tini: # (docker-init)
@@ -42,11 +39,6 @@ _build-tini: # (docker-init)
 	cd tini/build \
 		&& cmake .. \
 		&& make tini-static
-
-_build-proxy: # (from libnetwork)
-	go build \
-		-o libnetwork/docker-proxy \
-		github.com/docker/libnetwork/cmd/proxy
 
 _build-engine:
 	PRODUCT=docker ./hack/make.sh dynbinary

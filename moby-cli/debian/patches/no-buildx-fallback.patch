@@ -1,0 +1,28 @@
+Description: avoid falling back to "docker buildx build" implicitly
+Author: Tianon Gravi <tianon@debian.org>
+Forwarded: no (this is an intentional upstream choice; Tianon disagrees with it)
+
+diff --git a/cli/command/cli.go b/cli/command/cli.go
+index 2a61d5e48..5f64ba424 100644
+--- a/cli/command/cli.go
++++ b/cli/command/cli.go
+@@ -164,6 +164,7 @@ func (cli *DockerCli) ContentTrustEnabled() bool {
+ 
+ // BuildKitEnabled returns buildkit is enabled or not.
+ func (cli *DockerCli) BuildKitEnabled() (bool, error) {
++	return false, nil // Tianon: force BuildKit builds to go through "docker buildx build" explicitly
+ 	// use DOCKER_BUILDKIT env var value if set and not empty
+ 	if v := os.Getenv("DOCKER_BUILDKIT"); v != "" {
+ 		enabled, err := strconv.ParseBool(v)
+diff --git a/cmd/docker/builder.go b/cmd/docker/builder.go
+index 7807f80b1..616e4ed4b 100644
+--- a/cmd/docker/builder.go
++++ b/cmd/docker/builder.go
+@@ -41,6 +41,7 @@ func newBuilderError(errorMsg string, pluginLoadErr error) error {
+ 
+ //nolint:gocyclo
+ func processBuilder(dockerCli command.Cli, cmd *cobra.Command, args, osargs []string) ([]string, []string, []string, error) {
++	return args, osargs, nil, nil // Tianon: force BuildKit builds to go through "docker buildx build" explicitly
+ 	var buildKitDisabled, useBuilder, useAlias bool
+ 	var envs []string
+ 

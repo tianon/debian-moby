@@ -1,7 +1,7 @@
 #!/usr/bin/dh-exec
 
 bundles/dynbinary-daemon/dockerd => /usr/bin/dockerd
-libnetwork/docker-proxy => /usr/bin/docker-proxy
+bundles/dynbinary-daemon/docker-proxy => /usr/bin/docker-proxy
 tini/build/tini-static => /usr/bin/docker-init
 
 contrib/check-config.sh /usr/share/moby-engine/contrib/

@@ -1,3 +1,2 @@
 containerd-arm64-v8.patch
-buildkit-fixclip.patch
 buildkit-noclip.patch
