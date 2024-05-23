@@ -1,0 +1,19 @@
+Description: switch default buildkit image to Tianon's
+Forwarded: nope, definitely not upstream-applicable!
+
+(also, make sure `QemuImage` is never used)
+
+diff --git a/driver/bkimage/bkimage.go b/driver/bkimage/bkimage.go
+index f2443e7c..60df6326 100644
+--- a/driver/bkimage/bkimage.go
++++ b/driver/bkimage/bkimage.go
+@@ -1,7 +1,7 @@
+ package bkimage
+ 
+ const (
+-	DefaultImage         = "moby/buildkit:buildx-stable-1" // TODO: make this verified
+-	QemuImage            = "tonistiigi/binfmt:latest"      // TODO: make this verified
++	DefaultImage         = "tianon/buildkit"
++	QemuImage            = "example.com/tianon/nope"
+ 	DefaultRootlessImage = DefaultImage + "-rootless"
+ )
