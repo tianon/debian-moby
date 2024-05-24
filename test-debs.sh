@@ -39,7 +39,7 @@ cat <<-'EOBASH'
 
 	apt-get update -qq
 	arch="$(dpkg --print-architecture)"
-	apt-get install -yqq --no-install-recommends -V ca-certificates iptables /debs/moby-*_"${arch}".deb
+	apt-get install -yqq --no-install-recommends -V ca-certificates iptables git /debs/moby-*_"${arch}".deb
 
 	containerd --version
 	ctr --version
@@ -47,26 +47,49 @@ cat <<-'EOBASH'
 	docker buildx version
 	runc --version
 
-	containerd &
+	containerd & pid="$!"
 	timeout 10s sh -c "while ! ctr version; do sleep 1; done"
+
+	if ctr plugins ls | grep opt; then
+		exit 1
+	fi
 
 	ctr image pull docker.io/library/hello-world:latest
 	ctr run --rm docker.io/library/hello-world:latest hello
 
+	# stop "containerd" so dockerd can start it up and we can test the "dockerd starts/manages containerd" behavior
+	kill "$pid"
+	wait "$pid"
+	# TODO also clear out containerd state?
+
 	dockerd &
 	timeout 10s sh -c "while ! docker version; do sleep 1; done"
+
+	if ctr -a /run/docker/containerd/containerd.sock plugins ls | grep opt; then
+		exit 1
+	fi
 
 	docker run --rm hello-world
 	docker run --rm --init hello-world
 
 	printf 'FROM hello-world\nRUN ["/hello"]' | DOCKER_BUILDKIT=0 docker build --tag hello-build:classic -
 
+	DOCKER_BUILDKIT=0 docker build --tag hello-build:classic-git 'https://github.com/docker-library/hello-world.git#3fb6ebca4163bf5b9cc496ac3e8f11cb1e754aee:amd64/hello-world'
+
 	printf 'FROM hello-world\nRUN ["/hello"]' | docker buildx build --tag hello-build:buildkit -
 
 	docker buildx create --name tianon --node tianon --driver docker-container --driver-opt image=tianon/buildkit --bootstrap
 	printf 'FROM hello-world\nRUN ["/hello"]' | docker buildx build --builder tianon --tag hello-build:buildx -
 
-	docker image inspect --format '.' hello-build:classic hello-build:buildkit hello-build:buildx > /dev/null
+	docker buildx build --tag hello-build:buildx-git 'https://github.com/docker-library/hello-world.git#3fb6ebca4163bf5b9cc496ac3e8f11cb1e754aee:amd64/hello-world'
+
+	docker image inspect --format '.' \
+		hello-build:classic \
+		hello-build:classic-git \
+		hello-build:buildkit \
+		hello-build:buildx \
+		hello-build:buildx-git \
+		> /dev/null
 
 	docker images
 EOBASH
