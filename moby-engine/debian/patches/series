@@ -1,2 +1,3 @@
-containerd-arm64-v8.patch
 buildkit-noclip.patch
+containerd-arm64-v8.patch
+mips64le.patch

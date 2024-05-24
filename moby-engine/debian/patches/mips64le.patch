@@ -1,0 +1,30 @@
+Description: fix build on mips64le
+Author: Tianon Gravi <tianon@debian.org>
+Forwarded: no (but probably should)
+
+# github.com/docker/docker/vendor/github.com/moby/buildkit/snapshot
+.gopath/src/github.com/docker/docker/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go:131:8: cannot use stat.Dev (variable of type uint32) as type uint64 in struct literal
+.gopath/src/github.com/docker/docker/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go:301:12: cannot use unix.Mkdev(0, 0) (value of type uint64) as type uint32 in struct literal
+
+diff --git a/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go b/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go
+index c4875000e..1d9d09d8f 100644
+--- a/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go
++++ b/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go
+@@ -128,7 +128,7 @@ func statInode(stat *syscall.Stat_t) inode {
+ 	}
+ 	return inode{
+ 		ino: stat.Ino,
+-		dev: stat.Dev,
++		dev: uint64(stat.Dev), // TODO figure out the "correct" solution for mips64le (where "stat.Dev" is a uint32)
+ 	}
+ }
+ 
+@@ -297,7 +297,7 @@ func (a *applier) applyDelete(ctx context.Context, ca *changeApply) (bool, error
+ 			if ca.srcStat == nil {
+ 				ca.srcStat = &syscall.Stat_t{
+ 					Mode: syscall.S_IFCHR,
+-					Rdev: unix.Mkdev(0, 0),
++					Rdev: 0, // TODO figure out the "correct" solution for mips64le (where "stat.Dev" is a uint32, but "unix.Mkdev" always returns uint64...); https://cs.opensource.google/go/x/sys/+/refs/tags/v0.10.0:unix/dev_linux.go;l=36
+ 				}
+ 				ca.srcPath = ""
+ 			}
