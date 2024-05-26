@@ -1,0 +1,33 @@
+Subject: ctr: support --user for run/create
+Author: Ye Sijun <junnplus@gmail.com>
+Applied-Upstream: https://github.com/containerd/containerd/pull/7145; 1.7+
+
+diff --git a/cmd/ctr/commands/commands.go b/cmd/ctr/commands/commands.go
+index 7823aa421..70d474e3e 100644
+--- a/cmd/ctr/commands/commands.go
++++ b/cmd/ctr/commands/commands.go
+@@ -203,6 +203,10 @@ var (
+ 			Name:  "rdt-class",
+ 			Usage: "name of the RDT class to associate the container with. Specifies a Class of Service (CLOS) for cache and memory bandwidth management.",
+ 		},
++		cli.StringFlag{
++			Name:  "user,u",
++			Usage: "username or user id, group optional (format: <name|uid>[:<group|gid>])",
++		},
+ 	}
+ )
+ 
+diff --git a/cmd/ctr/commands/run/run_unix.go b/cmd/ctr/commands/run/run_unix.go
+index 6ee3940a1..e841a4e86 100644
+--- a/cmd/ctr/commands/run/run_unix.go
++++ b/cmd/ctr/commands/run/run_unix.go
+@@ -195,6 +195,9 @@ func NewContainer(ctx gocontext.Context, client *containerd.Client, context *cli
+ 		if cwd := context.String("cwd"); cwd != "" {
+ 			opts = append(opts, oci.WithProcessCwd(cwd))
+ 		}
++		if user := context.String("user"); user != "" {
++			opts = append(opts, oci.WithUser(user), oci.WithAdditionalGIDs(user))
++		}
+ 		if context.Bool("tty") {
+ 			opts = append(opts, oci.WithTTY)
+ 		}

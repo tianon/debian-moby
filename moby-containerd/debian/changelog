@@ -1,3 +1,10 @@
+moby-containerd (1.6.32-3) UNRELEASED; urgency=medium
+
+  * Backport patch for "ctr run --user"
+    - https://github.com/containerd/containerd/pull/7145
+
+ -- Tianon Gravi <tianon@debian.org>  Sat, 25 May 2024 22:03:07 -0700
+
 moby-containerd (1.6.32-2) unstable; urgency=medium
 
   * Update "opt disabling" patch to remove "opt" plugin entirely
