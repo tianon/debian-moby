@@ -57,6 +57,11 @@ cat <<-'EOBASH'
 	ctr image pull docker.io/library/hello-world:latest
 	ctr run --rm docker.io/library/hello-world:latest hello
 
+	busybox='docker.io/library/busybox@sha256:5eef5ed34e1e1ff0a4ae850395cbf665c4de6b4b83a32a0bc7bcb998e24e7bbb' # "latest" as of 2024-05-25
+	ctr image pull "$busybox"
+	out="$(ctr run --rm --user 1000:1000 "$busybox" bb id)"
+	[ "$out" = 'uid=1000 gid=1000 groups=1000' ]
+
 	# stop "containerd" so dockerd can start it up and we can test the "dockerd starts/manages containerd" behavior
 	kill "$pid"
 	wait "$pid"
