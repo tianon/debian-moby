@@ -1,3 +1,9 @@
+moby-engine (23.0.11-3) UNRELEASED; urgency=medium
+
+  * Disable recursive cloning of submodules given a Git URL
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 30 May 2024 15:27:02 -0700
+
 moby-engine (23.0.11-2) unstable; urgency=medium
 
   * Add patch to fix buildkit on mips64le

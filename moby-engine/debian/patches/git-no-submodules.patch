@@ -1,0 +1,37 @@
+Description: disable recursive cloning of submodules given a Git URL
+Forwarded: https://github.com/moby/buildkit/issues/4974, https://github.com/moby/moby/pull/3463#issuecomment-31778263
+
+diff --git a/builder/remotecontext/git/gitutils.go b/builder/remotecontext/git/gitutils.go
+index c20f8da75b..09e2b99e76 100644
+--- a/builder/remotecontext/git/gitutils.go
++++ b/builder/remotecontext/git/gitutils.go
+@@ -80,13 +80,6 @@ func (repo gitRepo) clone() (checkoutDir string, err error) {
+ 		return "", err
+ 	}
+ 
+-	cmd := exec.Command("git", "submodule", "update", "--init", "--recursive", "--depth=1")
+-	cmd.Dir = root
+-	output, err := cmd.CombinedOutput()
+-	if err != nil {
+-		return "", errors.Wrapf(err, "error initializing submodules: %s", output)
+-	}
+-
+ 	return checkoutDir, nil
+ }
+ 
+diff --git a/vendor/github.com/moby/buildkit/source/git/gitsource.go b/vendor/github.com/moby/buildkit/source/git/gitsource.go
+index 7b52c11330..9830cd5a63 100644
+--- a/vendor/github.com/moby/buildkit/source/git/gitsource.go
++++ b/vendor/github.com/moby/buildkit/source/git/gitsource.go
+@@ -588,11 +588,6 @@ func (gs *gitSourceHandler) Snapshot(ctx context.Context, g session.Group) (out
+ 		}
+ 	}
+ 
+-	_, err = gitWithinDir(ctx, gitDir, checkoutDir, sock, knownHosts, gs.auth, "submodule", "update", "--init", "--recursive", "--depth=1")
+-	if err != nil {
+-		return nil, errors.Wrapf(err, "failed to update submodules for %s", urlutil.RedactCredentials(gs.src.Remote))
+-	}
+-
+ 	if idmap := mount.IdentityMapping(); idmap != nil {
+ 		u := idmap.RootPair()
+ 		err := filepath.Walk(gitDir, func(p string, f os.FileInfo, err error) error {
