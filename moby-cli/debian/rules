@@ -25,10 +25,7 @@ override_dh_auto_configure:
 	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/docker/cli'
 
 override_dh_auto_build:
-	mkdir -p build
-	sed -e '/GO111MODULE/d' scripts/build/binary > build/fixed-build-script.sh
-	chmod +x build/fixed-build-script.sh
-	build/fixed-build-script.sh
+	scripts/build/binary
 
 # TODO https://github.com/docker/cli/issues/4212 / https://github.com/docker/cli/pull/4228 😭
 # https://github.com/docker/cli/blob/v23.0.10/scripts/docs/generate-man.sh

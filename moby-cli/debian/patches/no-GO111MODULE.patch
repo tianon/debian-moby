@@ -1,0 +1,17 @@
+Description: patch out explicit GO111MODULE setting
+Author: Tianon Gravi <tianon@debian.org>
+Forwarded: no
+
+diff --git a/scripts/build/binary b/scripts/build/binary
+index 44cd4f14f..b1a589932 100755
+--- a/scripts/build/binary
++++ b/scripts/build/binary
+@@ -13,8 +13,6 @@ fi
+ 
+ echo "Building $GO_LINKMODE $(basename "${TARGET}")"
+ 
+-export GO111MODULE=auto
+-
+ if [ "$(go env GOOS)" = "windows" ]; then
+   if [ ! -x "$(command -v goversioninfo)" ]; then
+     >&2 echo "goversioninfo not found, skipping manifesting binary"
