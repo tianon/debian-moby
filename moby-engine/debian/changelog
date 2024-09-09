@@ -1,6 +1,6 @@
-moby-engine (23.0.12-1) UNRELEASED; urgency=medium
+moby-engine (23.0.14-1) UNRELEASED; urgency=medium
 
-  * Update to 23.0.12
+  * Update to 23.0.14
   * Disable recursive cloning of submodules given a Git URL
   * Update mips64le.patch with Forwarded URL
   * Backport https://github.com/moby/moby/pull/48455 for riscv64 seccomp
