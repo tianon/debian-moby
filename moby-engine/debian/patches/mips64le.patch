@@ -1,6 +1,6 @@
 Description: fix build on mips64le
 Author: Tianon Gravi <tianon@debian.org>
-Forwarded: no (but probably should)
+Forwarded: https://github.com/moby/buildkit/issues/5129#issuecomment-2214797262
 
 # github.com/docker/docker/vendor/github.com/moby/buildkit/snapshot
 .gopath/src/github.com/docker/docker/vendor/github.com/moby/buildkit/snapshot/diffapply_unix.go:131:8: cannot use stat.Dev (variable of type uint32) as type uint64 in struct literal
