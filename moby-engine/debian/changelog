@@ -4,6 +4,7 @@ moby-engine (23.0.14-1) UNRELEASED; urgency=medium
   * Disable recursive cloning of submodules given a Git URL
   * Update mips64le.patch with Forwarded URL
   * Backport https://github.com/moby/moby/pull/48455 for riscv64 seccomp
+  * Fix journald reading (missing Build-Depends)
 
  -- Tianon Gravi <tianon@debian.org>  Thu, 30 May 2024 16:02:51 -0700
 

@@ -17,7 +17,8 @@ include /usr/share/dpkg/pkg-info.mk
 export VERSION := $(DEB_VERSION_UPSTREAM)
 export DOCKER_GITCOMMIT := $(DEB_VERSION_UPSTREAM_REVISION)
 
-export DOCKER_BUILDTAGS := apparmor seccomp selinux
+# include journald explicitly so that we fail if it isn't supported/working
+export DOCKER_BUILDTAGS := apparmor seccomp selinux journald
 
 ifneq (,$(filter parallel=%, $(DEB_BUILD_OPTIONS)))
 	NUMJOBS := $(patsubst parallel=%, %, $(filter parallel=%, $(DEB_BUILD_OPTIONS)))

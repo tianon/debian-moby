@@ -13,6 +13,7 @@ Build-Depends: cmake,
                libdevmapper-dev,
                libltdl-dev,
                libseccomp-dev,
+               libsystemd-dev,
                pkg-config
 Rules-Requires-Root: no
 Homepage: https://github.com/moby/moby
