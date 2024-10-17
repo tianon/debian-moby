@@ -1,12 +1,12 @@
-moby-engine (23.0.14-1) UNRELEASED; urgency=medium
+moby-engine (23.0.15-1) UNRELEASED; urgency=medium
 
-  * Update to 23.0.14
+  * Update to 23.0.15
   * Disable recursive cloning of submodules given a Git URL
   * Update mips64le.patch with Forwarded URL
   * Backport https://github.com/moby/moby/pull/48455 for riscv64 seccomp
   * Fix journald reading (missing Build-Depends)
 
- -- Tianon Gravi <tianon@debian.org>  Thu, 30 May 2024 16:02:51 -0700
+ -- Tianon Gravi <tianon@debian.org>  Thu, 17 Oct 2024 12:15:50 -0700
 
 moby-engine (23.0.11-2) unstable; urgency=medium
 
