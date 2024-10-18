@@ -1,10 +1,10 @@
-moby-cli (23.0.15-1) UNRELEASED; urgency=medium
+moby-cli (23.0.15-1) unstable; urgency=medium
 
   * Update to 23.0.15
   * Convert GO111MODULE fix into explicit patch
     (so we're more likely to notice if/when it breaks)
 
- -- Tianon Gravi <tianon@debian.org>  Thu, 17 Oct 2024 12:18:04 -0700
+ -- Tianon Gravi <tianon@debian.org>  Fri, 18 Oct 2024 13:33:53 -0700
 
 moby-cli (23.0.10-1) unstable; urgency=medium
 

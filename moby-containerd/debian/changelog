@@ -1,10 +1,10 @@
-moby-containerd (1.6.36-1) UNRELEASED; urgency=medium
+moby-containerd (1.6.36-1) unstable; urgency=medium
 
   * Update to 1.6.36
   * Backport patch for "ctr run --user"
     - https://github.com/containerd/containerd/pull/7145
 
- -- Tianon Gravi <tianon@debian.org>  Thu, 17 Oct 2024 13:32:20 -0700
+ -- Tianon Gravi <tianon@debian.org>  Fri, 18 Oct 2024 13:33:54 -0700
 
 moby-containerd (1.6.32-2) unstable; urgency=medium
 
