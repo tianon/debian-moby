@@ -29,7 +29,7 @@ override_dh_auto_build:
 # basic smoke test to ensure binaries built successfully
 override_dh_auto_test:
 	./bin/containerd --version
-	@# "containerd-shim" has no version flag
+	@# "containerd-shim" has no version flag; TODO https://github.com/containerd/containerd/commit/fdbfde5d8101360ad587f527030f25e8d108bfd4 (1.7+ adds -v!)
 	./bin/ctr --version
 
 override_dh_installsystemd:
