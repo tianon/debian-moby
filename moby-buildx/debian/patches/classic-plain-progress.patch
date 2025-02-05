@@ -2,6 +2,12 @@ Description: adjust "plain" progress output (during RUN) to have red highlight f
 Author: Tianon Gravi <tianon@debian.org>
 Applied-Upstream: 👀 (no, but *might* be acceptable if it could be optional)
 
+See related:
+- https://github.com/moby/buildkit/issues/1186 (all output goes to stderr)
+- https://github.com/moby/buildkit/issues/1507 (--progress=plain-in-order)
+- https://github.com/moby/buildkit/issues/1837 (plain output to a file / cleaner)
+- https://github.com/moby/buildkit/issues/2543 (RUN output verbosity)
+
 diff --git a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
 index 4ceb4f52..7b1fde74 100644
 --- a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
