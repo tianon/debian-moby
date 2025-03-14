@@ -25,6 +25,10 @@ override_dh_auto_configure:
 	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/docker/cli'
 
 override_dh_auto_build:
+# embed *somthing* usefully identifying as our "platform"
+	set -eux; \
+	PLATFORM="$$(awk -F ': ' '$$1 ~ /^Vcs-(Browser|Git)$$/ { print $$2; exit }' debian/control)"; \
+	export PLATFORM; \
 	scripts/build/binary
 
 # TODO https://github.com/docker/cli/issues/4212 / https://github.com/docker/cli/pull/4228 😭
