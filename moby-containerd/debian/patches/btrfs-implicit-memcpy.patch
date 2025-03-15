@@ -1,0 +1,16 @@
+Description: btrfs.c:25:9: error: implicit declaration of function ‘memcpy’ [-Wimplicit-function-declaration]
+Author: Tianon Gravi <tianon@debian.org>
+Applied-Upstream: https://github.com/containerd/btrfs/pull/40
+
+diff --git a/vendor/github.com/containerd/btrfs/btrfs.c b/vendor/github.com/containerd/btrfs/btrfs.c
+index f0da012f0..e5fac41d4 100644
+--- a/vendor/github.com/containerd/btrfs/btrfs.c
++++ b/vendor/github.com/containerd/btrfs/btrfs.c
+@@ -19,6 +19,7 @@
+ #include <btrfs/ioctl.h>
+ #include <btrfs/ctree.h>
+ 
++#include <string.h>
+ #include "btrfs.h"
+ 
+ void unpack_root_item(struct gosafe_btrfs_root_item* dst, struct btrfs_root_item* src) {
