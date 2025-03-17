@@ -1,0 +1,72 @@
+Description: enable --security-opt writable-cgroups=true|false
+Origin: https://github.com/moby/moby/pull/48828
+Applied-Upstream: v28+
+
+diff --git a/container/container.go b/container/container.go
+index d0f70e139e..e8b762689e 100644
+--- a/container/container.go
++++ b/container/container.go
+@@ -107,6 +107,7 @@ type Container struct {
+ 	ResolvConfPath  string
+ 	SeccompProfile  string
+ 	NoNewPrivileges bool
++	WritableCgroups *bool
+ 
+ 	// Fields here are specific to Windows
+ 	NetworkSharedContainerID string            `json:"-"`
+diff --git a/daemon/daemon_unix.go b/daemon/daemon_unix.go
+index c589c5ea88..b1bf1f446e 100644
+--- a/daemon/daemon_unix.go
++++ b/daemon/daemon_unix.go
+@@ -216,6 +216,11 @@ func parseSecurityOpt(container *container.Container, config *containertypes.Hos
+ 			container.NoNewPrivileges = true
+ 			continue
+ 		}
++		if opt == "writable-cgroups" {
++			trueVal := true
++			container.WritableCgroups = &trueVal
++			continue
++		}
+ 		if opt == "disable" {
+ 			labelOpts = append(labelOpts, "disable")
+ 			continue
+@@ -245,6 +250,12 @@ func parseSecurityOpt(container *container.Container, config *containertypes.Hos
+ 				return fmt.Errorf("invalid --security-opt 2: %q", opt)
+ 			}
+ 			container.NoNewPrivileges = noNewPrivileges
++		case "writable-cgroups":
++			writableCgroups, err := strconv.ParseBool(con[1])
++			if err != nil {
++				return fmt.Errorf("invalid --security-opt 2: %q", opt)
++			}
++			container.WritableCgroups = &writableCgroups
+ 		default:
+ 			return fmt.Errorf("invalid --security-opt 2: %q", opt)
+ 		}
+diff --git a/daemon/oci_linux.go b/daemon/oci_linux.go
+index 3ab7fc5785..815766951a 100644
+--- a/daemon/oci_linux.go
++++ b/daemon/oci_linux.go
+@@ -731,9 +731,21 @@ func WithMounts(daemon *Daemon, c *container.Container) coci.SpecOpts {
+ 			}
+ 		}
+ 
++		// if the user didn't specify otherwise, default to the value of privileged
++		writableCgroups := c.HostConfig.Privileged
++		if c.WritableCgroups != nil {
++			if daemon.Rootless() || daemon.idMapping.UIDMaps != nil {
++				// error if the user requested a configuration we can't explicitly support
++				return errors.New("option WritableCgroups conflicts with user namespaces and rootless mode")
++			}
++			writableCgroups = *c.WritableCgroups
++		}
+ 		// TODO: until a kernel/mount solution exists for handling remount in a user namespace,
+ 		// we must clear the readonly flag for the cgroups mount (@mrunalp concurs)
+-		if uidMap := daemon.idMapping.UIDMaps; uidMap != nil || c.HostConfig.Privileged {
++		if daemon.idMapping.UIDMaps != nil {
++			writableCgroups = true
++		}
++		if writableCgroups {
+ 			for i, m := range s.Mounts {
+ 				if m.Type == "cgroup" {
+ 					clearReadOnly(&s.Mounts[i])
