@@ -1,0 +1,16 @@
+Description: normalize "naming to" output to Docker names (not "canonical"), especially so "--tag foo" doesn't say "docker.io/library/foo"
+Forwarded: no (upstream does not want this)
+
+diff --git a/builder/builder-next/exporter/export.go b/builder/builder-next/exporter/export.go
+index 408231790c..e02901c5eb 100644
+--- a/builder/builder-next/exporter/export.go
++++ b/builder/builder-next/exporter/export.go
+@@ -212,7 +212,7 @@ func (e *imageExporterInstance) Export(ctx context.Context, inp exporter.Source,
+ 
+ 	if e.opt.ImageTagger != nil {
+ 		for _, targetName := range e.targetNames {
+-			tagDone := oneOffProgress(ctx, "naming to "+targetName.String())
++			tagDone := oneOffProgress(ctx, "naming to "+strings.TrimPrefix(strings.TrimPrefix(targetName.String(), "docker.io/"), "library/"))
+ 			if err := e.opt.ImageTagger.TagImageWithReference(image.ID(digest.Digest(id)), targetName); err != nil {
+ 				return nil, tagDone(err)
+ 			}

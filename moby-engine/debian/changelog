@@ -2,6 +2,8 @@ moby-engine (23.0.16-1) UNRELEASED; urgency=medium
 
   * Update to 23.0.16
   * Backport https://github.com/moby/moby/pull/48828 for writable-cgroups
+  * Refresh BuildKit patches
+    - https://github.com/tianon/dockerfiles/tree/2d1cd78dc7417f79f4c985dc1579573d08d1e140/buildkit
 
  -- Tianon Gravi <tianon@debian.org>  Mon, 17 Mar 2025 22:33:41 -0700
 

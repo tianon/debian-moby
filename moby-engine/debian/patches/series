@@ -1,4 +1,8 @@
 48828-writable-cgroups.patch
+buildkit-5072-fetch-tags.patch
+buildkit-5441-fetch-by-commit.patch
+buildkit-argsescaped.patch
+buildkit-naming-to-clean.patch
 buildkit-noclip.patch
 containerd-arm64-v8.patch
 git-no-submodules.patch
