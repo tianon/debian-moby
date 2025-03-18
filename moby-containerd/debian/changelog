@@ -2,6 +2,7 @@ moby-containerd (1.6.38-1) UNRELEASED; urgency=medium
 
   * Update to 1.6.38
   * Add patch for implicit declaration of memcpy in btrfs
+  * Update to Go 1.20 🙃
 
  -- Tianon Gravi <tianon@debian.org>  Mon, 17 Mar 2025 22:25:44 -0700
 

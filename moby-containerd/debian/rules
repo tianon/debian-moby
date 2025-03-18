@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
-# prefer Go 1.19
-export PATH := /usr/lib/go-1.19/bin:$(PATH)
+# prefer Go 1.20
+export PATH := /usr/lib/go-1.20/bin:$(PATH)
 
 # temporary build path (see http://golang.org/doc/code.html#GOPATH)
 OUR_GOPATH := $(CURDIR)/.gopath
