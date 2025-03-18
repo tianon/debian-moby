@@ -1,4 +1,3 @@
-48455-fix-riscv64-seccomp.patch
 48828-writable-cgroups.patch
 buildkit-noclip.patch
 containerd-arm64-v8.patch

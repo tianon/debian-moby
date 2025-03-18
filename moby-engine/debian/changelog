@@ -1,8 +1,9 @@
-moby-engine (23.0.15-2) UNRELEASED; urgency=medium
+moby-engine (23.0.16-1) UNRELEASED; urgency=medium
 
+  * Update to 23.0.16
   * Backport https://github.com/moby/moby/pull/48828 for writable-cgroups
 
- -- Tianon Gravi <tianon@debian.org>  Mon, 17 Mar 2025 16:47:02 -0700
+ -- Tianon Gravi <tianon@debian.org>  Mon, 17 Mar 2025 22:33:41 -0700
 
 moby-engine (23.0.15-1) unstable; urgency=medium
 
