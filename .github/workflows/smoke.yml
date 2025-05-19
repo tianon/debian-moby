@@ -19,6 +19,7 @@ jobs:
       matrix:
         dist:
           - unstable
+          - trixie
           - bookworm-backports
       fail-fast: false
     name: ${{ matrix.dist }}
