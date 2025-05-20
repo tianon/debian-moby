@@ -1,0 +1,74 @@
+Subject: [PATCH] connhelper: Allow socket path when using SSH
+Origin: https://github.com/docker/cli/pull/4073
+Applied-Upstream: v24+
+
+diff --git a/cli/connhelper/connhelper.go b/cli/connhelper/connhelper.go
+index 9ac9d6744d45..397149c3e28c 100644
+--- a/cli/connhelper/connhelper.go
++++ b/cli/connhelper/connhelper.go
+@@ -47,7 +47,12 @@ func getConnectionHelper(daemonURL string, sshFlags []string) (*ConnectionHelper
+ 		}
+ 		return &ConnectionHelper{
+ 			Dialer: func(ctx context.Context, network, addr string) (net.Conn, error) {
+-				return commandconn.New(ctx, "ssh", append(sshFlags, sp.Args("docker", "system", "dial-stdio")...)...)
++				args := []string{"docker"}
++				if sp.Path != "" {
++					args = append(args, "--host", "unix://"+sp.Path)
++				}
++				args = append(args, "system", "dial-stdio")
++				return commandconn.New(ctx, "ssh", append(sshFlags, sp.Args(args...)...)...)
+ 			},
+ 			Host: "http://docker.example.com",
+ 		}, nil
+diff --git a/cli/connhelper/ssh/ssh.go b/cli/connhelper/ssh/ssh.go
+index bde01ae7f738..fb4c911105a7 100644
+--- a/cli/connhelper/ssh/ssh.go
++++ b/cli/connhelper/ssh/ssh.go
+@@ -30,9 +30,7 @@ func ParseURL(daemonURL string) (*Spec, error) {
+ 		return nil, errors.Errorf("no host specified")
+ 	}
+ 	sp.Port = u.Port()
+-	if u.Path != "" {
+-		return nil, errors.Errorf("extra path after the host: %q", u.Path)
+-	}
++	sp.Path = u.Path
+ 	if u.RawQuery != "" {
+ 		return nil, errors.Errorf("extra query after the host: %q", u.RawQuery)
+ 	}
+@@ -47,6 +45,7 @@ type Spec struct {
+ 	User string
+ 	Host string
+ 	Port string
++	Path string
+ }
+ 
+ // Args returns args except "ssh" itself combined with optional additional command args
+diff --git a/cli/connhelper/ssh/ssh_test.go b/cli/connhelper/ssh/ssh_test.go
+index 87c3c3c49c98..4b6d2c341da9 100644
+--- a/cli/connhelper/ssh/ssh_test.go
++++ b/cli/connhelper/ssh/ssh_test.go
+@@ -32,8 +32,10 @@ func TestParseURL(t *testing.T) {
+ 			expectedError: "plain-text password is not supported",
+ 		},
+ 		{
+-			url:           "ssh://foo/bar",
+-			expectedError: `extra path after the host: "/bar"`,
++			url: "ssh://foo/bar",
++			expectedArgs: []string{
++				"--", "foo",
++			},
+ 		},
+ 		{
+ 			url:           "ssh://foo?bar",
+diff --git a/docs/reference/commandline/dockerd.md b/docs/reference/commandline/dockerd.md
+index ba7d9be8ab99..12be4b9e3da9 100644
+--- a/docs/reference/commandline/dockerd.md
++++ b/docs/reference/commandline/dockerd.md
+@@ -213,6 +213,7 @@ precedence over `HTTP_PROXY`.
+ The Docker client supports connecting to a remote daemon via SSH:
+ 
+ ```console
++$ docker -H ssh://me@example.com:22/var/run/docker.sock ps
+ $ docker -H ssh://me@example.com:22 ps
+ $ docker -H ssh://me@example.com ps
+ $ docker -H ssh://example.com ps
