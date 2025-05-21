@@ -1,4 +1,4 @@
-moby-containerd (1.6.38-1) UNRELEASED; urgency=medium
+moby-containerd (1.6.38-1) unstable; urgency=medium
 
   * Update to 1.6.38
   * Add patch for implicit declaration of memcpy in btrfs
@@ -11,7 +11,7 @@ moby-containerd (1.6.38-1) UNRELEASED; urgency=medium
   * Replace pkg-config (transitional) with pkgconf
   * Remove /opt/containerd dirs entry (we patch out "opt")
 
- -- Tianon Gravi <tianon@debian.org>  Mon, 17 Mar 2025 22:25:44 -0700
+ -- Tianon Gravi <tianon@debian.org>  Wed, 21 May 2025 14:19:31 -0700
 
 moby-containerd (1.6.36-1) unstable; urgency=medium
 
