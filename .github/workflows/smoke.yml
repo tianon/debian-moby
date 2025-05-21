@@ -103,3 +103,15 @@ jobs:
       - name: Test packages
         run: |
           ./test-debs.sh "$dist" .built
+
+      - name: Lintian (only unstable)
+        if: matrix.dist == 'unstable'
+        continue-on-error: true
+        run: |
+          time docker build --pull --tag lintian --quiet - <<-'EODF'
+            FROM debian:unstable-slim
+            RUN apt-get update && apt-get install -y lintian && rm -rf /var/lib/apt/lists/*
+            USER 1234:5678
+          EODF
+          # the lintian colors render horrifically on GHA, but they do make the output easier to scan/parse, so I've decided to leave them in
+          docker run --rm --mount "type=bind,src=$PWD,dst=/pwd,ro" --workdir /pwd lintian lintian --color=always -EvIL +pedantic .dscs/*.dsc .built/*.deb
