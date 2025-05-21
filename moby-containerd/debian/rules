@@ -11,6 +11,11 @@ export GOCACHE := $(OUR_GOPATH)/.cache
 export GOPROXY := off
 export GOFLAGS := -trimpath -mod=vendor
 
+# https://github.com/containerd/containerd/blob/release/1.6/BUILDING.md#build-containerd
+export BUILDTAGS := no_aufs no_cri
+# no_aufs because AUFS is dead
+# no_cri because Tianon doesn't use k8s
+
 include /usr/share/dpkg/pkg-info.mk
 
 override_dh_auto_configure:
