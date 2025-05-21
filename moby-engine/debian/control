@@ -14,7 +14,7 @@ Build-Depends: cmake,
                libltdl-dev,
                libseccomp-dev,
                libsystemd-dev,
-               pkg-config
+               pkgconf
 Rules-Requires-Root: no
 Homepage: https://github.com/moby/moby
 Vcs-Browser: https://github.com/tianon/debian-moby/tree/HEAD/moby-engine/debian

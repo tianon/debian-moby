@@ -1,3 +1,7 @@
+Description: fix service ExecStart path
+Author: Tianon Gravi <tianon@debian.org>
+Forwarded: not-needed
+
 diff --git a/containerd.service b/containerd.service
 index 5f67110ab..0f45ad0cd 100644
 --- a/containerd.service

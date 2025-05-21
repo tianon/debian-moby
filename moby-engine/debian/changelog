@@ -4,6 +4,8 @@ moby-engine (23.0.18-1) UNRELEASED; urgency=medium
   * Backport https://github.com/moby/moby/pull/48828 for writable-cgroups
   * Refresh BuildKit patches
     - https://github.com/tianon/dockerfiles/tree/2d1cd78dc7417f79f4c985dc1579573d08d1e140/buildkit
+  * Remove filenamemangle from d/watch
+  * Replace pkg-config (transitional) with pkgconf
 
  -- Tianon Gravi <tianon@debian.org>  Tue, 20 May 2025 14:08:53 -0700
 
