@@ -6,6 +6,10 @@ moby-containerd (1.6.38-1) UNRELEASED; urgency=medium
   * Disable AUFS and CRI
     - AUFS is long-since dead and we don't need it
     - I don't use or test k8s, so CRI is dead weight too
+  * Remove filenamemangle from d/watch
+  * Add missing DEP3 description
+  * Replace pkg-config (transitional) with pkgconf
+  * Remove /opt/containerd dirs entry (we patch out "opt")
 
  -- Tianon Gravi <tianon@debian.org>  Mon, 17 Mar 2025 22:25:44 -0700
 

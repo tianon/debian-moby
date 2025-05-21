@@ -3,14 +3,12 @@ version=4
 # github's ".../tags" paginates too soon, so we lose historical versions too early for tianon's tastes (hence uscan.tianon.xyz)
 
 opts=\
-uversionmangle=s/-ce//g;s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/,\
-filenamemangle=s/.+\/v(\d\S*)\.tar\.gz/moby-engine_$1.orig.tar.gz/ \
+uversionmangle=s/-ce//g;s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/ \
   https://uscan.tianon.xyz/github.com/moby/moby \
   https://github.com/.*/v(\d\S*)\.tar\.gz
 
 opts=\
 component=tini,\
-uversionmangle=s/-ce//g;s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/,\
-filenamemangle=s/.+\/docker-(\d\S*)\.tar\.gz/moby-engine_$1.orig-tini.tar.gz/ \
+uversionmangle=s/-ce//g;s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/ \
   https://uscan.tianon.xyz/github.com/tianon/docker-tini-tags \
   https://github.com/.*/docker-(\d\S*)\.tar\.gz
