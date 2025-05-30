@@ -59,6 +59,9 @@ override_dh_auto_test:
 override_dh_installsystemd:
 	dh_installsystemd --name=docker
 
+override_dh_installsysusers:
+	dh_installsysusers --name=docker
+
 override_dh_installudev:
 	dh_installudev --priority=z80
 

@@ -1,3 +1,9 @@
+moby-engine (23.0.18-2) UNRELEASED; urgency=medium
+
+  * Use systemd-sysusers to install "docker" group
+
+ -- Tianon Gravi <tianon@debian.org>  Fri, 30 May 2025 10:04:00 -0700
+
 moby-engine (23.0.18-1) unstable; urgency=medium
 
   * Update to 23.0.18

@@ -1,0 +1,20 @@
+Description: add systemd-sysusers configuration
+Author: Robert Sturla <robertsturla@outlook.com>
+Origin: https://github.com/moby/moby/pull/49813
+Applied-Upstream: v28.2+
+
+diff --git a/contrib/systemd-sysusers/docker.conf b/contrib/systemd-sysusers/docker.conf
+new file mode 100644
+index 0000000000000..faf1d08921a3f
+--- /dev/null
++++ b/contrib/systemd-sysusers/docker.conf
+@@ -0,0 +1,9 @@
++#
++# WARNING: the docker group grants root-level privileges
++#
++# For details on how this impacts security in your system, see:
++#
++#    https://docs.docker.com/go/attack-surface/
++#    https://docs.docker.com/go/daemon-access/
++#
++g	docker	-
