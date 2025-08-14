@@ -25,7 +25,7 @@ jobs:
     name: ${{ matrix.dist }}
     env:
       dist: ${{ matrix.dist }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04 # TODO deal with 24.04 vs trixie 🙃 ("moby-engine : Depends: libdevmapper1.02.1 (>= 2:1.02.197) but 2:1.02.185-3ubuntu3.2 is to be installed" - 24.04 claims to be trixie, but decidedly isn't because it's a year and four months early)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
