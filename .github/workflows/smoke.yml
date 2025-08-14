@@ -25,7 +25,7 @@ jobs:
     name: ${{ matrix.dist }}
     env:
       dist: ${{ matrix.dist }}
-    runs-on: ubuntu-22.04 # TODO deal with 24.04 vs trixie 🙃
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
