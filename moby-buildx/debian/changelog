@@ -1,3 +1,9 @@
+moby-buildx (0.17.1-3) UNRELEASED; urgency=medium
+
+  * Add patch to disable error "stutter" during build failures
+
+ -- Tianon Gravi <tianon@debian.org>  Wed, 13 Aug 2025 22:14:10 -0700
+
 moby-buildx (0.17.1-2) unstable; urgency=medium
 
   * Add upstream references to DEP3 header in classic-plain-progress.patch

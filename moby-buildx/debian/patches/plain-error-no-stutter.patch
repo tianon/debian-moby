@@ -1,0 +1,17 @@
+Description: update "plain" logger to not "stutter" the last 10 lines of the error again (they're just up in the scrollback)
+Author: Tianon Gravi <tianon@debian.org>
+Forwarded: no (presumably upstream does this on purpose)
+
+diff --git a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
+index 41d108586..0526dc402 100644
+--- a/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
++++ b/vendor/github.com/moby/buildkit/util/progress/progressui/display.go
+@@ -274,7 +274,7 @@ func (d *plainDisplay) done() {
+ 	// Force the display to refresh.
+ 	d.refresh()
+ 	// Print error logs.
+-	d.t.printErrorLogs(d.t.w)
++	//d.t.printErrorLogs(d.t.w)
+ }
+ 
+ type rawJSONDisplay struct {

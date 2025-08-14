@@ -4,3 +4,4 @@ default-images.patch
 default-load.patch
 default-plain-progress.patch
 no-git-by-default.patch
+plain-error-no-stutter.patch
