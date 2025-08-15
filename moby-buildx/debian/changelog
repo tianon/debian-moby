@@ -1,8 +1,8 @@
-moby-buildx (0.17.1-3) UNRELEASED; urgency=medium
+moby-buildx (0.17.1-3) unstable; urgency=medium
 
   * Add patch to disable error "stutter" during build failures
 
- -- Tianon Gravi <tianon@debian.org>  Wed, 13 Aug 2025 22:14:10 -0700
+ -- Tianon Gravi <tianon@debian.org>  Fri, 15 Aug 2025 15:23:22 -0700
 
 moby-buildx (0.17.1-2) unstable; urgency=medium
 
