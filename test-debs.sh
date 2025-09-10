@@ -97,6 +97,9 @@ cat <<-'EOBASH'
 		> /dev/null
 
 	docker images
+
+	nofile="$(docker run --rm busybox sh -c 'ulimit -n')"
+	test "$nofile" = "$(( 1024 * 1024 ))"
 EOBASH
 )"
 
