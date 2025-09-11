@@ -1,10 +1,10 @@
-moby-engine (23.0.18-2) UNRELEASED; urgency=medium
+moby-engine (23.0.18-2) unstable; urgency=medium
 
   * Use systemd-sysusers to install "docker" group
   * Patch out LimitNOFILE
     - see https://github.com/moby/moby/pull/45534
 
- -- Tianon Gravi <tianon@debian.org>  Fri, 30 May 2025 10:04:00 -0700
+ -- Tianon Gravi <tianon@debian.org>  Wed, 10 Sep 2025 17:26:51 -0700
 
 moby-engine (23.0.18-1) unstable; urgency=medium
 
