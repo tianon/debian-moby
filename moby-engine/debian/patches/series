@@ -8,3 +8,4 @@ buildkit-noclip.patch
 containerd-arm64-v8.patch
 git-no-submodules.patch
 mips64le.patch
+service-nofile.patch
