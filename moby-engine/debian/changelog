@@ -1,3 +1,10 @@
+moby-engine (23.0.18-3) UNRELEASED; urgency=medium
+
+  * Resync systemd service file
+    - I forgot I was maintaining a copy of this myself 😑
+
+ -- Tianon Gravi <tianon@debian.org>  Fri, 12 Sep 2025 11:18:55 -0700
+
 moby-engine (23.0.18-2) unstable; urgency=medium
 
   * Use systemd-sysusers to install "docker" group
