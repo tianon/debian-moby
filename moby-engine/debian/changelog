@@ -1,9 +1,9 @@
-moby-engine (23.0.18-3) UNRELEASED; urgency=medium
+moby-engine (23.0.18-3) unstable; urgency=medium
 
   * Resync systemd service file
     - I forgot I was maintaining a copy of this myself 😑
 
- -- Tianon Gravi <tianon@debian.org>  Fri, 12 Sep 2025 11:18:55 -0700
+ -- Tianon Gravi <tianon@debian.org>  Fri, 12 Sep 2025 11:23:10 -0700
 
 moby-engine (23.0.18-2) unstable; urgency=medium
 
