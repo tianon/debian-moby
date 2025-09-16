@@ -21,10 +21,14 @@ jobs:
           - unstable
           - trixie
           - bookworm-backports
+        arch:
+          - amd64
+          - ppc64el
       fail-fast: false
-    name: ${{ matrix.dist }}
+    name: '${{ matrix.dist }} [${{ matrix.arch }}]'
     env:
       dist: ${{ matrix.dist }}
+      arch: ${{ matrix.arch }}
     runs-on: ubuntu-22.04 # TODO deal with 24.04 vs trixie 🙃 ("moby-engine : Depends: libdevmapper1.02.1 (>= 2:1.02.197) but 2:1.02.185-3ubuntu3.2 is to be installed" - 24.04 claims to be trixie, but decidedly isn't because it's a year and four months early)
     steps:
       - name: Checkout repository
@@ -36,7 +40,7 @@ jobs:
         uses: actions/checkout@v4 # https://github.com/tianon/debian-bin
         with:
           repository: tianon/debian-bin
-          ref: de5b30401e07a6bfd537ae64b2a2007b7af70d00
+          ref: 1ec50e608cfb37d143888de9f232bd22777fd46c
           path: .debian-bin
 
       - name: Prepare PATH
@@ -92,6 +96,7 @@ jobs:
               --workdir /dsc \
               .built \
               "$dist.tar" \
+              --host "$arch" \
               --arch-all --arch-any --source \
               --bd-uninstallable-explainer apt \
               --build-dep-resolver aptitude \
@@ -101,6 +106,7 @@ jobs:
           done
 
       - name: Test packages
+        if: matrix.arch == 'amd64'
         run: |
           ./test-debs.sh "$dist" .built
 

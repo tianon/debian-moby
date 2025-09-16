@@ -13,6 +13,18 @@ export GOTOOLCHAIN := local
 
 export GOFLAGS := -mod=vendor -trimpath -gcflags=all="-trimpath=$(OUR_GOPATH)/src" -asmflags=all="-trimpath=$(OUR_GOPATH)/src"
 
+export CGO_ENABLED := 1
+DPKG_EXPORT_BUILDTOOLS := 1
+include /usr/share/dpkg/buildtools.mk
+
+# TODO https://bugs.debian.org/960842
+include /usr/share/dpkg/architecture.mk
+export GOOS := linux
+export GOARCH := $(DEB_HOST_ARCH_CPU:el=le)
+ifeq ($(GOARCH),i386)
+	export GOARCH := 386
+endif
+
 override_dh_auto_configure:
 	# set up GOPATH symlink farm
 	mkdir -p '$(OUR_GOPATH)/src/github.com/opencontainers'

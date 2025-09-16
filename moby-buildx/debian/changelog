@@ -3,6 +3,7 @@ moby-buildx (0.17.1-4) UNRELEASED; urgency=medium
   [ Tianon Gravi ]
   * Patch `org.opencontainers.image.ref.name` to be a full reference
   * Set GOTOOLCHAIN=local to avoid poor Go behavior explicitly
+  * Add support for cross-compiling
 
   [ Joseph Ferguson ]
   * Backport upstream fix: handle at symbols in an oci-layout path
