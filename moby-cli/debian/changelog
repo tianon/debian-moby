@@ -1,3 +1,9 @@
+moby-cli (23.0.15-3) UNRELEASED; urgency=medium
+
+  * Add support for cross-compiling
+
+ -- Tianon Gravi <tianon@debian.org>  Mon, 15 Sep 2025 21:27:49 -0700
+
 moby-cli (23.0.15-2) unstable; urgency=medium
 
   * Backport https://github.com/docker/cli/pull/4073
