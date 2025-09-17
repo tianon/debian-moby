@@ -4,8 +4,8 @@ Priority: optional
 Maintainer: Tianon Gravi <tianon@debian.org>
 Build-Depends: bash-completion,
                debhelper-compat (= 13),
-               go-md2man,
-               golang-1.20-go | golang-go (>= 2:1.20~) | golang-any (>= 2:1.20~),
+               go-md2man:native | go-md2man,
+               golang-1.20-go:native | golang-go:native (>= 2:1.20~),
                libbtrfs-dev | btrfs-progs (<< 4.16.1~),
                libseccomp-dev,
                pkgconf
