@@ -1,3 +1,9 @@
+moby-containerd (1.7.29-1) UNRELEASED; urgency=medium
+
+  * Update to 1.7.29
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 06 Nov 2025 10:57:57 -0800
+
 moby-containerd (1.6.38-2) unstable; urgency=medium
 
   * Patch out LimitNOFILE
