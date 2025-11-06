@@ -1,0 +1,63 @@
+Description: libct: fix mips compilation
+Author: Kir Kolyshkin <kolyshkin@gmail.com>
+Applied-Upstream: https://github.com/opencontainers/runc/pull/4964, 1.4.0-rc.4+, 1.3.4+, 1.2.9+
+
+On MIPS arches, Rdev is uint32 so we have to convert it.
+
+diff --git a/libcontainer/console_linux.go b/libcontainer/console_linux.go
+index c93151bc6b2..016219baf5f 100644
+--- a/libcontainer/console_linux.go
++++ b/libcontainer/console_linux.go
+@@ -33,9 +33,10 @@ func checkPtmxHandle(ptmx *os.File) error {
+ 		if stat.Ino != PTMX_INO {
+ 			return fmt.Errorf("ptmx handle has wrong inode number: %v", stat.Ino)
+ 		}
+-		if stat.Mode&unix.S_IFMT != unix.S_IFCHR || stat.Rdev != unix.Mkdev(PTMX_MAJOR, PTMX_MINOR) {
++		rdev := uint64(stat.Rdev) //nolint:unconvert // Rdev is uint32 on MIPS.
++		if stat.Mode&unix.S_IFMT != unix.S_IFCHR || rdev != unix.Mkdev(PTMX_MAJOR, PTMX_MINOR) {
+ 			return fmt.Errorf("ptmx handle is not a real char ptmx device: ftype %#x %d:%d",
+-				stat.Mode&unix.S_IFMT, unix.Major(stat.Rdev), unix.Minor(stat.Rdev))
++				stat.Mode&unix.S_IFMT, unix.Major(rdev), unix.Minor(rdev))
+ 		}
+ 		return nil
+ 	})
+@@ -79,9 +80,10 @@ func getPtyPeer(pty console.Console, unsafePeerPath string, flags int) (*os.File
+ 		if statfs.Type != unix.DEVPTS_SUPER_MAGIC {
+ 			return fmt.Errorf("pty peer handle is not on a real devpts mount: super magic is %#x", statfs.Type)
+ 		}
+-		if stat.Mode&unix.S_IFMT != unix.S_IFCHR || stat.Rdev != wantPeerDev {
++		rdev := uint64(stat.Rdev) //nolint:unconvert // Rdev is uint32 on MIPS.
++		if stat.Mode&unix.S_IFMT != unix.S_IFCHR || rdev != wantPeerDev {
+ 			return fmt.Errorf("pty peer handle is not the real char device for pty %d: ftype %#x %d:%d",
+-				peerNum, stat.Mode&unix.S_IFMT, unix.Major(stat.Rdev), unix.Minor(stat.Rdev))
++				peerNum, stat.Mode&unix.S_IFMT, unix.Major(rdev), unix.Minor(rdev))
+ 		}
+ 		return nil
+ 	}); err != nil {
+diff --git a/libcontainer/rootfs_linux.go b/libcontainer/rootfs_linux.go
+index 255c2f8ab07..204e6a80fc1 100644
+--- a/libcontainer/rootfs_linux.go
++++ b/libcontainer/rootfs_linux.go
+@@ -1046,10 +1046,10 @@ func mknodDevice(destDir *os.File, destName string, node *devices.Device) error
+ 				node.Type, node.Path,
+ 				stat.Mode&unix.S_IFMT, fileMode&unix.S_IFMT)
+ 		}
+-		if stat.Rdev != dev {
++		if rdev := uint64(stat.Rdev); rdev != dev { //nolint:unconvert // Rdev is uint32 on MIPS.
+ 			return fmt.Errorf("new %c device inode %s has incorrect major:minor: %d:%d doesn't match expected %d:%d",
+ 				node.Type, node.Path,
+-				unix.Major(stat.Rdev), unix.Minor(stat.Rdev),
++				unix.Major(rdev), unix.Minor(rdev),
+ 				unix.Major(dev), unix.Minor(dev))
+ 		}
+ 		return nil
+@@ -1320,7 +1320,8 @@ func remountReadonly(m *configs.Mount) error {
+ }
+ 
+ func isDevNull(st *unix.Stat_t) bool {
+-	return st.Mode&unix.S_IFMT == unix.S_IFCHR && st.Rdev == unix.Mkdev(1, 3)
++	//nolint:unconvert // Rdev is uint32 on MIPS.
++	return st.Mode&unix.S_IFMT == unix.S_IFCHR && uint64(st.Rdev) == unix.Mkdev(1, 3)
+ }
+ 
+ func verifyDevNull(f *os.File) error {

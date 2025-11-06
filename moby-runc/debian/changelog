@@ -1,3 +1,9 @@
+moby-runc (1.2.8-2) UNRELEASED; urgency=medium
+
+  * Backport upstream patch for mips64le compilation
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 06 Nov 2025 11:40:56 -0800
+
 moby-runc (1.2.8-1) unstable; urgency=medium
 
   * Update to 1.2.8
