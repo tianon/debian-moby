@@ -1,3 +1,9 @@
+moby-runc (1.2.8-3) unstable; urgency=medium
+
+  * Update to Go 1.23 to avoid mips64le+QEMU compilation/runtime failures
+
+ -- Tianon Gravi <tianon@debian.org>  Thu, 06 Nov 2025 16:29:09 -0800
+
 moby-runc (1.2.8-2) unstable; urgency=medium
 
   * Backport upstream patch for mips64le compilation
