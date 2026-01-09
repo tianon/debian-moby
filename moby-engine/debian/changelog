@@ -1,3 +1,9 @@
+moby-engine (23.0.18-4) UNRELEASED; urgency=medium
+
+  * Patch `org.opencontainers.image.ref.name` to be a full reference
+
+ -- Tianon Gravi <tianon@debian.org>  Fri, 09 Jan 2026 14:53:21 -0800
+
 moby-engine (23.0.18-3) unstable; urgency=medium
 
   * Resync systemd service file

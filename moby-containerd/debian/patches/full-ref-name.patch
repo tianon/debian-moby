@@ -1,0 +1,32 @@
+Description: put the full reference in "org.opencontainers.image.ref.name"
+Author: Tianon Gravi <tianon@debian.org>
+Forwarded: no (probably should, but I don't know what appetite for adjusting this is, and I don't have the spoons to find out)
+
+There's some useful OCI discussion in https://github.com/opencontainers/image-spec/pull/1196, but the comment "OCI defines the reference name as only a tag excluding the repository." in the containerd source code (https://github.com/containerd/containerd/blob/a49ed606a4f9d2f21c770e0e710c6d449649ec7f/core/images/archive/reference.go#L94-L95) is inaccurate.
+
+diff --git a/images/archive/exporter.go b/images/archive/exporter.go
+index 58a17daec..fb3c70a65 100644
+--- a/images/archive/exporter.go
++++ b/images/archive/exporter.go
+@@ -200,7 +200,7 @@ func addNameAnnotation(name string, base map[string]string) map[string]string {
+ 	}
+ 
+ 	annotations[images.AnnotationImageName] = name
+-	annotations[ocispec.AnnotationRefName] = ociReferenceName(name)
++	annotations[ocispec.AnnotationRefName] = name
+ 
+ 	return annotations
+ }
+diff --git a/images/archive/importer.go b/images/archive/importer.go
+index 6cbd25c74..93b2ef895 100644
+--- a/images/archive/importer.go
++++ b/images/archive/importer.go
+@@ -224,7 +224,7 @@ func ImportIndex(ctx context.Context, store content.Store, reader io.Reader, opt
+ 
+ 				mfstdesc.Annotations = map[string]string{
+ 					images.AnnotationImageName: normalized,
+-					ocispec.AnnotationRefName:  ociReferenceName(normalized),
++					ocispec.AnnotationRefName:  normalized,
+ 				}
+ 
+ 				idx.Manifests = append(idx.Manifests, mfstdesc)

@@ -6,5 +6,6 @@ buildkit-argsescaped.patch
 buildkit-naming-to-clean.patch
 buildkit-noclip.patch
 containerd-arm64-v8.patch
+full-ref-name.patch
 git-no-submodules.patch
 mips64le.patch
