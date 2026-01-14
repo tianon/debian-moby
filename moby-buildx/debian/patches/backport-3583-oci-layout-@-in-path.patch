@@ -1,0 +1,60 @@
+Description: backport fix for oci-layout paths with @ symbols
+Author: Jonathan A. Sternberg <jonathan.sternberg@docker.com>, backport to 0.17.1: Joseph Ferguson <joseph.ferguson@docker.com>
+Origin: https://github.com/docker/buildx/pull/3583
+Applied-Upstream: > v0.30.1
+
+diff --git a/build/opt.go b/build/opt.go
+index c8d52c91..c677cb7c 100644
+--- a/build/opt.go
++++ b/build/opt.go
+@@ -494,12 +494,8 @@ func loadInputs(ctx context.Context, d *driver.DriverHandle, inp Inputs, pw prog
+ 		// handle OCI layout
+ 		if strings.HasPrefix(v.Path, "oci-layout://") {
+ 			localPath := strings.TrimPrefix(v.Path, "oci-layout://")
+-			localPath, dig, hasDigest := strings.Cut(localPath, "@")
+-			localPath, tag, hasTag := strings.Cut(localPath, ":")
+-			if !hasTag {
+-				tag = "latest"
+-			}
+-			if !hasDigest {
++			localPath, dig, tag := parseOCILayoutPath(localPath)
++			if dig == "" {
+ 				dig, err = resolveDigest(localPath, tag)
+ 				if err != nil {
+ 					return nil, errors.Wrapf(err, "oci-layout reference %q could not be resolved", v.Path)
+@@ -646,3 +642,35 @@ type fs struct {
+ }
+ 
+ var _ fsutil.FS = &fs{}
++
++// parseOCILayoutPath handles the oci-layout url accepted by buildx.
++func parseOCILayoutPath(s string) (localPath, dgst, tag string) {
++	localPath = s
++
++	// Look for the digest reference. There might be multiple @ symbols
++	// in the path and the @ symbol may be part of the path or part of
++	// the digest. If we find the @ symbol, verify that it's a valid
++	// digest reference instead of just assuming it is because it
++	// might be part of the file path.
++	if i := strings.LastIndex(localPath, "@"); i >= 0 {
++		after := localPath[i+1:]
++		if reference.DigestRegexp.MatchString(after) {
++			localPath, dgst = localPath[:i], after
++		}
++	}
++
++	// Do the same with the tag. This isn't as necessary since colons
++	// aren't valid as file paths on Linux/Unix systems, but they are valid
++	// on Windows systems so we might as well just be safe.
++	if i := strings.LastIndex(localPath, ":"); i >= 0 {
++		after := localPath[i+1:]
++		if reference.TagRegexp.MatchString(after) {
++			localPath, tag = localPath[:i], after
++		}
++	}
++
++	if tag == "" {
++		tag = "latest"
++	}
++	return
++}
