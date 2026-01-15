@@ -1,10 +1,10 @@
-moby-engine (23.0.18-4) UNRELEASED; urgency=medium
+moby-engine (23.0.18-4) unstable; urgency=medium
 
   * Patch `org.opencontainers.image.ref.name` to be a full reference
   * Set GOTOOLCHAIN=local to avoid poor Go behavior explicitly
   * Backport tini patch for newer cmake
 
- -- Tianon Gravi <tianon@debian.org>  Fri, 09 Jan 2026 14:53:21 -0800
+ -- Tianon Gravi <tianon@debian.org>  Wed, 14 Jan 2026 19:33:18 -0800
 
 moby-engine (23.0.18-3) unstable; urgency=medium
 

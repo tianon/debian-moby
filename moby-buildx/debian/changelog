@@ -1,4 +1,4 @@
-moby-buildx (0.17.1-4) UNRELEASED; urgency=medium
+moby-buildx (0.17.1-4) unstable; urgency=medium
 
   [ Tianon Gravi ]
   * Patch `org.opencontainers.image.ref.name` to be a full reference
@@ -7,7 +7,7 @@ moby-buildx (0.17.1-4) UNRELEASED; urgency=medium
   [ Joseph Ferguson ]
   * Backport upstream fix: handle at symbols in an oci-layout path
 
- -- Tianon Gravi <tianon@debian.org>  Fri, 09 Jan 2026 14:55:30 -0800
+ -- Tianon Gravi <tianon@debian.org>  Wed, 14 Jan 2026 19:33:15 -0800
 
 moby-buildx (0.17.1-3) unstable; urgency=medium
 
