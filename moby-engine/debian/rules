@@ -7,6 +7,7 @@ export PATH := /usr/lib/go-1.19/bin:$(PATH)
 OUR_GOPATH := $(CURDIR)/.gopath
 export GOPATH := $(OUR_GOPATH)
 # circumvent a few problematic (for Debian) Go features inspired by dh-golang
+export GO111MODULE := off
 export GOCACHE := $(OUR_GOPATH)/.cache
 export GOPROXY := off
 export GOTOOLCHAIN := local
