@@ -6,6 +6,7 @@ export PATH := /usr/lib/go-1.21/bin:$(PATH)
 # circumvent a few problematic (for Debian) Go features inspired by dh-golang
 export GOCACHE := $(CURDIR)/.gocache
 export GOPROXY := off
+export GOTOOLCHAIN := local
 
 include /usr/share/dpkg/pkg-info.mk
 PKG := github.com/docker/buildx

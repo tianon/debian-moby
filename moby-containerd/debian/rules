@@ -9,6 +9,8 @@ export GOPATH := $(OUR_GOPATH)
 # circumvent a few problematic (for Debian) Go features inspired by dh-golang
 export GOCACHE := $(OUR_GOPATH)/.cache
 export GOPROXY := off
+export GOTOOLCHAIN := local
+
 export GOFLAGS := -trimpath -mod=vendor
 
 # https://github.com/containerd/containerd/blob/release/1.6/BUILDING.md#build-containerd

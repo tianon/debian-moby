@@ -9,7 +9,8 @@ export GOPATH := $(OUR_GOPATH)
 # circumvent a few problematic (for Debian) Go features inspired by dh-golang
 export GOCACHE := $(OUR_GOPATH)/.cache
 export GOPROXY := off
-export GO111MODULE := off
+export GOTOOLCHAIN := local
+
 export GOFLAGS := -trimpath
 
 include /usr/share/dpkg/pkg-info.mk

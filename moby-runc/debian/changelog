@@ -1,6 +1,7 @@
 moby-runc (1.2.9-1) UNRELEASED; urgency=medium
 
   * Update to 1.2.9
+  * Set GOTOOLCHAIN=local to avoid poor Go behavior explicitly
 
  -- Tianon Gravi <tianon@debian.org>  Wed, 14 Jan 2026 16:52:22 -0800
 
