@@ -1,0 +1,15 @@
+Description: allow newer CMake versions
+Author: Bjorn Neergaard <bneergaard@mirantis.com>, Rudi Heitbaum <rudi@heitbaum.com>
+Origin: https://github.com/krallin/tini/pull/206, https://github.com/krallin/tini/pull/233
+Applied-Upstream: 0.19.1+
+
+diff --git a/tini/CMakeLists.txt b/tini/CMakeLists.txt
+index ca0209b..16d693d 100644
+--- a/tini/CMakeLists.txt
++++ b/tini/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required (VERSION 2.8.0)
++cmake_minimum_required (VERSION 2.8.12...3.10)
+ project (tini C)
+ 
+ # Config
