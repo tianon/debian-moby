@@ -21,6 +21,18 @@ export GITCOMMIT := $(DEB_VERSION_UPSTREAM_REVISION)
 export GO_LINKMODE := dynamic
 export LDFLAGS :=
 
+export CGO_ENABLED := 1
+DPKG_EXPORT_BUILDTOOLS := 1
+include /usr/share/dpkg/buildtools.mk
+
+# TODO https://bugs.debian.org/960842
+include /usr/share/dpkg/architecture.mk
+export GOOS := linux
+export GOARCH := $(DEB_HOST_ARCH_CPU:el=le)
+ifeq ($(GOARCH),i386)
+	export GOARCH := 386
+endif
+
 override_dh_auto_configure:
 	# set up GOPATH symlink farm
 	mkdir -p '$(OUR_GOPATH)/src/github.com/docker'

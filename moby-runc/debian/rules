@@ -13,6 +13,12 @@ export GOTOOLCHAIN := local
 
 export GOFLAGS := -mod=vendor -trimpath -gcflags=all="-trimpath=$(OUR_GOPATH)/src" -asmflags=all="-trimpath=$(OUR_GOPATH)/src"
 
+export CGO_ENABLED := 1
+DPKG_EXPORT_BUILDTOOLS := 1
+include /usr/share/dpkg/buildtools.mk
+
+include debian/go-cross.mk
+
 override_dh_auto_configure:
 	# set up GOPATH symlink farm
 	mkdir -p '$(OUR_GOPATH)/src/github.com/opencontainers'

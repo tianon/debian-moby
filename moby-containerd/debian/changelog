@@ -3,6 +3,7 @@ moby-containerd (1.7.30-1) unstable; urgency=medium
   * Patch `org.opencontainers.image.ref.name` to be a full reference
   * Update to 1.7.30
   * Set GOTOOLCHAIN=local to avoid poor Go behavior explicitly
+  * Add support for cross-compiling
 
  -- Tianon Gravi <tianon@debian.org>  Wed, 14 Jan 2026 19:33:17 -0800
 
