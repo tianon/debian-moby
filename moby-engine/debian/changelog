@@ -3,6 +3,7 @@ moby-engine (23.0.18-4) unstable; urgency=medium
   * Patch `org.opencontainers.image.ref.name` to be a full reference
   * Set GOTOOLCHAIN=local to avoid poor Go behavior explicitly
   * Backport tini patch for newer cmake
+  * Add support for cross-compiling
 
  -- Tianon Gravi <tianon@debian.org>  Wed, 14 Jan 2026 19:33:18 -0800
 
