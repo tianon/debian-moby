@@ -21,7 +21,7 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	cd '$(OUR_GOPATH)/src/github.com/opencontainers/runc' \
 		&& $(MAKE) runc man \
-			BUILDTAGS='seccomp apparmor selinux' \
+			EXTRA_BUILDTAGS='seccomp apparmor selinux' \
 			COMMIT=''
 
 # basic smoke test to ensure binaries built successfully
