@@ -1,3 +1,9 @@
+moby-containerd (1.7.31-1) UNRELEASED; urgency=medium
+
+  * Update to 1.7.31
+
+ -- Tianon Gravi <tianon@debian.org>  Tue, 14 Apr 2026 19:56:15 -0700
+
 moby-containerd (1.7.30-1) unstable; urgency=medium
 
   * Patch `org.opencontainers.image.ref.name` to be a full reference
