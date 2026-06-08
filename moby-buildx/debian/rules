@@ -8,6 +8,18 @@ export GOCACHE := $(CURDIR)/.gocache
 export GOPROXY := off
 export GOTOOLCHAIN := local
 
+export CGO_ENABLED := 1
+DPKG_EXPORT_BUILDTOOLS := 1
+include /usr/share/dpkg/buildtools.mk
+
+# TODO https://bugs.debian.org/960842
+include /usr/share/dpkg/architecture.mk
+export GOOS := linux
+export GOARCH := $(DEB_HOST_ARCH_CPU:el=le)
+ifeq ($(GOARCH),i386)
+	export GOARCH := 386
+endif
+
 include /usr/share/dpkg/pkg-info.mk
 PKG := github.com/docker/buildx
 LDFLAGS := \

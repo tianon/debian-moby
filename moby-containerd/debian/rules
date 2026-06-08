@@ -18,20 +18,41 @@ export BUILDTAGS := no_aufs no_cri
 # no_aufs because AUFS is dead
 # no_cri because Tianon doesn't use k8s
 
+export CGO_ENABLED := 1
+DPKG_EXPORT_BUILDTOOLS := 1
+include /usr/share/dpkg/buildtools.mk
+
+# TODO https://bugs.debian.org/960842
+include /usr/share/dpkg/architecture.mk
+export GOOS := linux
+export GOARCH := $(DEB_HOST_ARCH_CPU:el=le)
+ifeq ($(GOARCH),i386)
+	export GOARCH := 386
+endif
+
 include /usr/share/dpkg/pkg-info.mk
+
+GOPATH_SRC_DIR := $(OUR_GOPATH)/src/github.com/containerd/containerd
 
 override_dh_auto_configure:
 	# set up GOPATH symlink farm
-	mkdir -p '$(OUR_GOPATH)/src/github.com/containerd'
-	ln -sfT '$(CURDIR)' '$(OUR_GOPATH)/src/github.com/containerd/containerd'
+	mkdir -p '$(dir $(GOPATH_SRC_DIR))'
+	ln -sfT '$(CURDIR)' '$(GOPATH_SRC_DIR)'
 	# fix -mod=readonly to be -mod=vendor
 	sed -ri -e 's/mod=readonly/mod=vendor/g' Makefile
 
-override_dh_auto_build:
-	cd '$(OUR_GOPATH)/src/github.com/containerd/containerd' \
-		&& $(MAKE) binaries man \
-			VERSION='$(DEB_VERSION_UPSTREAM_REVISION)' \
-			REVISION=''
+override_dh_auto_build: c8d-binaries c8d-man
+
+c8d-binaries:
+	$(MAKE) -C '$(GOPATH_SRC_DIR)' binaries \
+		VERSION='$(DEB_VERSION_UPSTREAM_REVISION)' \
+		REVISION=''
+
+# man page generation does "go run" which requires "native" os/arch
+c8d-man:
+	unset GOOS GOARCH \
+	&& CGO_ENABLED=0 \
+		$(MAKE) -C '$(GOPATH_SRC_DIR)' man
 
 # basic smoke test to ensure binaries built successfully
 override_dh_auto_test:
